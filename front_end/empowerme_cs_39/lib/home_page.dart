@@ -58,8 +58,11 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[100],
-      appBar: AppBar(
+      appBar: PreferredSize(
+        preferredSize:const Size.fromHeight(75.0),
+        child: AppBar(
         title: const Text("Home"),
+        centerTitle: true,
         titleTextStyle: const TextStyle(
           fontSize: 40,
           fontWeight: FontWeight.w800,
@@ -77,6 +80,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
+    ),
 
       body: Padding(
         padding: const EdgeInsets.only(top: 70, left: 50, right: 50, bottom: 50),

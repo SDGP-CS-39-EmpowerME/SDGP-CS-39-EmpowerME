@@ -34,7 +34,12 @@ class _BottomNavBarState extends State<BottomNavBar> {
               selectedIndex = index;
               widget.onTap(index);
             });
-            Navigator.pushNamed(context, '/homepage');
+            //Navigator.pushNamed(context, '/homepage');
+            try{
+            Navigator.pushNamedAndRemoveUntil(context, '/homepage', (route) => false);
+            } catch (e) {
+              print(e);
+            }
           }
           else if (index == 1) { // Check if tapped index is 1 (Detect)
             setState(() {
