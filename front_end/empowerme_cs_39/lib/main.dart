@@ -13,11 +13,11 @@ runApp(MaterialApp(
       colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightBlue),
       useMaterial3:true,
       ),
-  home: HomePage(), //specify the screen the app starts on.
+  home: const HomePage(), //specify the screen the app starts on.
   routes: <String, WidgetBuilder>{
-    '/smartwatch_details_page': (BuildContext context) => SmartwatchDetails(),
-    '/homepage' :(BuildContext context) =>  HomePage(),
-    '/savedfilespage' :(BuildContext context) => SavedFilesPage(),
+    '/smartwatch_details_page': (BuildContext context) => const SmartwatchDetails(),
+    '/homepage' :(BuildContext context) =>  const HomePage(),
+    '/savedfilespage' :(BuildContext context) => const SavedFilesPage(),
   },
 ));
 }

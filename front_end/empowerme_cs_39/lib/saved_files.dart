@@ -26,9 +26,32 @@ class _SavedFilesPageState extends State<SavedFilesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      
       backgroundColor: Colors.grey[100],
-      appBar: AppBar(
-        title: const Text("Saved Files"),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(75.0),
+          child:AppBar(
+        leading: GestureDetector(
+          onTap: () {
+            Navigator.of(context).pop(); // Handlheige back navigation here
+            },
+            child: Container(
+              padding: EdgeInsets.all(10.0),
+              child: const Icon(
+                Icons.arrow_back_ios, // Replace this with your custom icon
+                color: Colors.white,
+                ),
+                ),
+                ),
+        title: const Text(
+                "Saved Files",
+                style: TextStyle(
+                  fontSize: 35,
+                  color: Color.fromARGB(113, 57, 37, 236),
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
+              centerTitle: true,
         titleTextStyle: const TextStyle(
           fontSize: 40,
           fontWeight: FontWeight.w800,
@@ -36,6 +59,7 @@ class _SavedFilesPageState extends State<SavedFilesPage> {
         ),
         backgroundColor: const Color.fromRGBO(0, 153, 255, 1.0),
       ),
+    ),
 
       body: Padding(
         padding: const EdgeInsets.only(top: 70, left: 50, right: 50, bottom: 50),
