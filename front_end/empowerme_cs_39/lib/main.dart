@@ -6,6 +6,10 @@ import 'package:empowerme_cs_39/smartwatch_details_page.dart';
 void main() {
 runApp(MaterialApp(
   debugShowCheckedModeBanner: false,
+  theme: ThemeData(
+      colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightBlue),
+      useMaterial3:true,
+      ),
   home: new SmartwatchDetails(), //specify the screen the app starts on.
   routes: <String, WidgetBuilder>{
     '/smartwatch_details_page': (BuildContext context) => SmartwatchDetails(),
