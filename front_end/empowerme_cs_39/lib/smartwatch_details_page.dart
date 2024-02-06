@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, unnecessary_string_escapes, avoid_print, sort_child_properties_last, unused_import, deprecated_member_use, prefer_const_constructors_in_immutables
 
 import 'package:flutter/material.dart';
+import 'package:empowerme_cs_39/bottom_nav_bar.dart';
 /*import 'package:google_sign_in/google_sign_in.dart';
 import 'package:googleapis/fitness/v1.dart';
 import 'package:googleapis_auth/auth.dart';*/
@@ -9,9 +10,6 @@ import 'package:googleapis_auth/auth.dart';*/
 void main() {
   runApp( SmartwatchDetails());
 }
-
-
-
 
 class SmartwatchDetails extends StatefulWidget {
    //MyApp({super.key});   
@@ -23,6 +21,14 @@ class _MyAppState extends State<SmartwatchDetails> {
   String userName = "User_213";
   String deviceName = "Samsung";
   String connectedStatus = "Connected";
+
+  //keeps track of current page to display
+  int selectedIndex = 0;
+  void navigateBottomBar(int index){
+    setState(() {
+      selectedIndex = index;
+    });
+  }
 
   void initState() {
     super.initState();
@@ -55,7 +61,7 @@ class _MyAppState extends State<SmartwatchDetails> {
       home: Scaffold(
       
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(150.0),
+          preferredSize: Size.fromHeight(100.0),
           child: AppBar(
             backgroundColor: Color.fromRGBO(0, 153, 255, 1),
             title: Transform.translate(
@@ -243,6 +249,9 @@ class _MyAppState extends State<SmartwatchDetails> {
           ],
           
         ),
+        bottomNavigationBar: BottomNavBar(
+        onTap: (index) => navigateBottomBar(index),
+      ),
       ),
     );
   }
