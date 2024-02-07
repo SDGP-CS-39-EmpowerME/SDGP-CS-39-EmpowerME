@@ -1,6 +1,7 @@
 import 'package:empowerme_cs_39/bottom_nav_bar.dart';
 import 'package:empowerme_cs_39/saved_files.dart';
 import 'package:empowerme_cs_39/smartwatch_details_page.dart';
+import 'package:empowerme_cs_39/manual_upload.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -43,7 +44,10 @@ class _HomePageState extends State<HomePage> {
         );
         break;
       case 3:
-        //code for upload page
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => ManualUpload()),
+        );
         break;
       case 4:
         //code for settings page
