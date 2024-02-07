@@ -2,6 +2,7 @@ import 'package:empowerme_cs_39/bottom_nav_bar.dart';
 import 'package:empowerme_cs_39/saved_files.dart';
 import 'package:empowerme_cs_39/smartwatch_details_page.dart';
 import 'package:empowerme_cs_39/manual_upload.dart';
+import 'package:empowerme_cs_39/voice_recorder_page.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -30,6 +31,10 @@ class _HomePageState extends State<HomePage> {
     switch (index){
       case 0:
         //code for record page
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => voiceRecorderPage()),
+        );
         break;
       case 1:
         Navigator.push(
