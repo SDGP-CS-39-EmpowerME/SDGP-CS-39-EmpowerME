@@ -69,7 +69,7 @@ flutter:
   assets:
     - assets/images-home/ #contains images used in the home page
     - assets/images-savedfiles/ #contains images used in the saved files page
-
+    - assets/images-connectsmartwatch/ #contains images used in the connect smartwatch page
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

@@ -1,5 +1,7 @@
 import 'package:empowerme_cs_39/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:empowerme_cs_39/connect_smartwatch.dart';
+
 /*import 'package:google_sign_in/google_sign_in.dart';
 import 'package:googleapis/fitness/v1.dart';
 import 'package:googleapis_auth/auth.dart';*/
@@ -101,6 +103,10 @@ class _SmartwatchDetailsPageState extends State<SmartwatchDetails> {
                 onPressed: () {
                   // ignore: avoid_print
                   print('Icon button pressed');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Connect_smartwatch()),
+                  );
                   // Navigator.push(
                   //   context,
                   //   MaterialPageRoute(builder: (context) => SecondPage()),
