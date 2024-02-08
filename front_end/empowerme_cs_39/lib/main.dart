@@ -5,6 +5,7 @@ import 'package:empowerme_cs_39/home_page.dart';
 import 'package:empowerme_cs_39/saved_files.dart';
 import 'package:empowerme_cs_39/smartwatch_details_page.dart';
 import 'package:empowerme_cs_39/voice_recorder_page.dart';
+import 'package:empowerme_cs_39/connect_smartwatch.dart';
 
 void main() {
 runApp(MaterialApp(
@@ -20,6 +21,7 @@ runApp(MaterialApp(
     '/homepage' :(BuildContext context) =>  const HomePage(),
     '/savedfilespage' :(BuildContext context) => const SavedFilesPage(),
     '/voicerecorderpage' :(BuildContext context) => const voiceRecorderPage(),
+    '/connectsmartwatchpage' :(BuildContext context) => const Connect_smartwatch(),
   },
 ));
 }
