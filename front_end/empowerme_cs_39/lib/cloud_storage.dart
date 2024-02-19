@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'cloud_storage_access_page.dart';
+
 
 class CloudStorage extends StatelessWidget {
   @override
@@ -116,20 +118,20 @@ class CloudStoragePage extends StatelessWidget {
   }
 }
 
-class CloudStorageAccessPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Cloud Storage Access'),
-        backgroundColor: Color(0xFF3377A8),
-      ),
-      body: Center(
-        child: Text(
-          'This is the Cloud Storage Access page',
-          style: TextStyle(fontSize: 20.0),
-        ),
-      ),
-    );
-  }
-}
+// class CloudStorageAccessPage extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text('Cloud Storage Access'),
+//         backgroundColor: Color(0xFF3377A8),
+//       ),
+//       body: Center(
+//         child: Text(
+//           'This is the Cloud Storage Access page',
+//           style: TextStyle(fontSize: 20.0),
+//         ),
+//       ),
+//     );
+//   }
+// }
