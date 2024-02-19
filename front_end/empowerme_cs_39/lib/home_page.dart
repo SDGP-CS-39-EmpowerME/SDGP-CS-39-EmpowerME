@@ -1,4 +1,5 @@
 import 'package:empowerme_cs_39/bottom_nav_bar.dart';
+import 'package:empowerme_cs_39/cloud_storage.dart';
 import 'package:empowerme_cs_39/saved_files.dart';
 import 'package:empowerme_cs_39/smartwatch_details_page.dart';
 import 'package:empowerme_cs_39/manual_upload.dart';
@@ -58,7 +59,10 @@ class _HomePageState extends State<HomePage> {
         //code for settings page
         break;
       case 5:
-        //code for cloud page
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => CloudStorage()),
+        );
         break;
     }
   }
