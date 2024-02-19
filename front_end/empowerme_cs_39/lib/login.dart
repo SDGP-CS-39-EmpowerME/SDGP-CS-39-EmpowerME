@@ -1,11 +1,12 @@
+import 'package:empowerme_cs_39/home_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const RegisterPersonalDetails());
+  runApp(const login());
 }
 
-class RegisterPersonalDetails extends StatelessWidget {
-  const RegisterPersonalDetails({Key? key}) : super(key: key);
+class login extends StatelessWidget {
+  const login({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -110,7 +111,10 @@ class RegisterPersonalDetails extends StatelessWidget {
                   ),
                   SizedBox(height: 10),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => HomePage()),
+                    );},
                     style: ElevatedButton.styleFrom(
                       primary: Colors.blue,
                     ),

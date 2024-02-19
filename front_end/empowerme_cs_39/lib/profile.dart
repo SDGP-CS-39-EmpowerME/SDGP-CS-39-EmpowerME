@@ -1,9 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const ProfilePage());
-}
+import 'bottom_nav_bar.dart';
+
+
+
+
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -22,6 +24,12 @@ class ProfileDetailsPage extends StatefulWidget {
 }
 
 class _ProfileDetailsPageState extends State<ProfileDetailsPage> {
+  int selectedIndex = 0;
+  void navigateBottomBar(int index){
+    setState(() {
+      selectedIndex = index;
+    });
+  }
   String _name = '';
   String _birthday = '';
   String _phoneNumber = '';
@@ -166,6 +174,9 @@ class _ProfileDetailsPageState extends State<ProfileDetailsPage> {
             ),
           ),
         ),
+      ),
+      bottomNavigationBar: BottomNavBar(
+        onTap: (index) => navigateBottomBar(index),
       ),
     );
   }

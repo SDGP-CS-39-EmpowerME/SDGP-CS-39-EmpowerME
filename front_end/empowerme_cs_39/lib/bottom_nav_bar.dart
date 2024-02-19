@@ -52,6 +52,11 @@ class _BottomNavBarState extends State<BottomNavBar> {
               selectedIndex = index;
               widget.onTap(index);
             });
+            try{
+              Navigator.pushNamedAndRemoveUntil(context, '/profilepage', (route) => false);
+            } catch (e) {
+              print(e);
+            }
           }
         },
         items: [
