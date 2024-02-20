@@ -1,4 +1,5 @@
 import 'package:empowerme_cs_39/home_page.dart';
+import 'package:empowerme_cs_39/personal_details.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -135,7 +136,12 @@ class login extends StatelessWidget {
                         style: TextStyle(color: Colors.black),
                       ),
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => RegisterPersonalDetails()),
+                    );
+                        },
                         child: Text(
                           'Register',
                           style: TextStyle(color: Colors.blue[900]), // Change to dark blue
