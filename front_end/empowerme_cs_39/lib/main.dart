@@ -1,6 +1,8 @@
 
 // ignore_for_file: unnecessary_new
 import 'package:empowerme_cs_39/login.dart';
+// ignore: unused_import
+import 'package:empowerme_cs_39/personal_details.dart';
 import 'package:flutter/material.dart';
 import 'package:empowerme_cs_39/home_page.dart';
 import 'package:empowerme_cs_39/saved_files.dart';
@@ -8,6 +10,8 @@ import 'package:empowerme_cs_39/smartwatch_details_page.dart';
 import 'package:empowerme_cs_39/voice_recorder_page.dart';
 import 'package:empowerme_cs_39/connect_smartwatch.dart';
 import 'package:empowerme_cs_39/profile.dart';
+
+
 
 void main() {
 runApp(MaterialApp(
