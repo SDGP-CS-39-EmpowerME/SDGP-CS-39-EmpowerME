@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:empowerme_cs_39/profile.dart';
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({super.key, required this.onTap});
@@ -53,7 +54,11 @@ class _BottomNavBarState extends State<BottomNavBar> {
               widget.onTap(index);
             });
             try{
-              Navigator.pushNamedAndRemoveUntil(context, '/profilepage', (route) => false);
+              //Navigator.pushNamedAndRemoveUntil(context, '/profilepage', (route) => false);
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ProfilePage()),
+              );
             } catch (e) {
               print(e);
             }
