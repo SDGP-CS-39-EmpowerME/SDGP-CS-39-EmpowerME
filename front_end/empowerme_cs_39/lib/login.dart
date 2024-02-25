@@ -1,10 +1,10 @@
 import 'package:empowerme_cs_39/home_page.dart';
-import 'package:empowerme_cs_39/personal_details.dart';
+import 'package:empowerme_cs_39/register_1_personal.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+/*void main() {
   runApp(const login());
-}
+}*/
 
 class login extends StatelessWidget {
   const login({Key? key}) : super(key: key);
@@ -33,7 +33,7 @@ class login extends StatelessWidget {
             width: 350,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
-              color: Colors.blueGrey[400], // Change color to shade of ash
+              color: Colors.blueGrey[100], // Change color to shade of ash
             ),
             child: Padding(
               padding: const EdgeInsets.all(20.0),
@@ -64,7 +64,7 @@ class login extends StatelessWidget {
                       return null;
                     },
                   ),
-                  SizedBox(height: 20),
+                  SizedBox(height: 10),
                   TextFormField(
                     decoration: const InputDecoration(
                       labelText: 'Password',
@@ -82,7 +82,7 @@ class login extends StatelessWidget {
                       return null;
                     },
                   ),
-                  SizedBox(height: 10),
+                  SizedBox(height: 0),
                   Row(
                     children: [
                       Expanded(
@@ -96,7 +96,7 @@ class login extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: 30),
+                  SizedBox(height: 8),
                   ElevatedButton(
                     onPressed: () {},
                     style: ElevatedButton.styleFrom(
@@ -108,6 +108,7 @@ class login extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
                       ),
+
                     ),
                   ),
                   SizedBox(height: 10),
