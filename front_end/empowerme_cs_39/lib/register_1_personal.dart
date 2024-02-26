@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:email_validator/email_validator.dart';
 
 class RegisterPersonalDetails extends StatelessWidget {
   const RegisterPersonalDetails({Key? key}) : super(key: key);
@@ -49,7 +50,21 @@ class RegisterPersonalDetails extends StatelessWidget {
           }),
           _buildInputField(Icons.email, 'Email or Phone Number', (value) {
             email = value;
+            /*return TextFormField(
+              decoration: const InputDecoration(
+                prefixIcon: Icon(Icons.email),
+                labelText: 'Email or Phone Number',
+              ),
+              onChanged: onChanged,
+              validator: (value) {
+                if (value!.isNotEmpty && !EmailValidator.validate(value!)) {
+                  return 'Please enter a valid email address';
+                }
+                return null; // No validation error
+              },
+            );*/
           }),
+
           _buildInputField(Icons.assignment_ind, 'NIC/Passport Number',
               (value) {
             nic = value;
