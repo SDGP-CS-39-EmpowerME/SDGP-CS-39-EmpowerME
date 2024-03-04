@@ -1,16 +1,33 @@
 import 'package:empowerme_cs_39/home_page.dart';
-import 'package:empowerme_cs_39/register_1_personal.dart';
+import 'package:empowerme_cs_39/auth/register_1_personal.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-/*void main() {
-  runApp(const login());
-}*/
 
-class login extends StatelessWidget {
-  const login({Key? key}) : super(key: key);
+class Login extends StatelessWidget {
+  Login({Key? key}) : super(key: key);
+
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  bool signInSuccess = false;
+
+  Future signIn() async {
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: _emailController.text,
+        password: _passwordController.text,
+      );
+      signInSuccess = true;
+
+    } on FirebaseAuthException catch (e) {
+      return e.message;
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
       theme: ThemeData(
         primaryColor: Colors.blue, // Set primary color theme
@@ -49,23 +66,28 @@ class login extends StatelessWidget {
                   ),
                   SizedBox(height: 20),
                   TextFormField(
+                    controller: _emailController,
                     decoration: const InputDecoration(
                       labelText: 'Email or Phone Number',
                       prefixIcon: Icon(Icons.account_circle),
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter your email or phone number';
+                        return 'Please enter your email address';
                       }
-                      // Validate either email or phone number format
-                      if (!_isValidEmail(value) && !_isValidPhoneNumber(value)) {
-                        return 'Please enter a valid email or phone number';
+                      // Validate email format
+                      else if (!_isValidEmail(value)) {
+                        return 'Please enter a valid email address';
+                      }
+                      else {
+                        _emailController.text = value;
                       }
                       return null;
                     },
                   ),
                   SizedBox(height: 10),
                   TextFormField(
+                    controller: _passwordController,
                     decoration: const InputDecoration(
                       labelText: 'Password',
                       prefixIcon: Icon(Icons.lock),
@@ -76,13 +98,15 @@ class login extends StatelessWidget {
                         return 'Please enter your password';
                       }
                       // Validate password strength
-                      if (value.length < 6) {
+                      else if (value.length < 6) {
                         return 'Password must be at least 6 characters';
+                      }
+                      else {
+                        _passwordController.text = value;
                       }
                       return null;
                     },
                   ),
-                  SizedBox(height: 0),
                   Row(
                     children: [
                       Expanded(
@@ -96,9 +120,53 @@ class login extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      signIn().then((_) {
+                        // Login successful! Navigate to HomePage
+                        if (signInSuccess == true){
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => const HomePage()),
+                          );
+                        }
+                        else if (signInSuccess == false){
+                          if (_passwordController.text.trim().length < 6){
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                backgroundColor: Colors.red,
+                                content: Text('Password should be at least 6 characters long.'),
+                              ),
+                            );
+                          }
+                          else if (!_isValidEmail(_emailController.text.trim())){
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                backgroundColor: Colors.red,
+                                content: Text('Please enter a valid email address.'),
+                              ),
+                            );
+                          }
+                          else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                backgroundColor: Colors.red,
+                                content: Text('Invalid email or password.'),
+                              ),
+                            );
+                          }
+                        }
+                      }).catchError((error) {
+                        // Handle sign-in errors
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            backgroundColor: Colors.red,
+                            content: Text(error.message!),
+                          ),
+                        );
+                      });
+                    },
                     style: ElevatedButton.styleFrom(
                       primary: Colors.blue,
                     ),
@@ -111,7 +179,7 @@ class login extends StatelessWidget {
 
                     ),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   ElevatedButton(
                     onPressed: () {Navigator.push(
                       context,
@@ -178,7 +246,7 @@ class CustomShapeBorder extends ContinuousRectangleBorder {
 
 bool _isValidEmail(String email) {
   // Simple email validation using regex
-  final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+  final emailRegex = RegExp(r'^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$');
   return emailRegex.hasMatch(email);
 }
 
