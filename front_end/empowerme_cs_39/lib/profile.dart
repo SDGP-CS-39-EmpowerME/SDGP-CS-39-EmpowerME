@@ -1,10 +1,9 @@
+import 'package:empowerme_cs_39/auth/login.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'bottom_nav_bar.dart';
-
-
-
 
 
 class ProfilePage extends StatelessWidget {
@@ -12,18 +11,33 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: ProfileDetailsPage(),
     );
   }
 }
 
 class ProfileDetailsPage extends StatefulWidget {
+  const ProfileDetailsPage({super.key});
+
   @override
   _ProfileDetailsPageState createState() => _ProfileDetailsPageState();
 }
 
 class _ProfileDetailsPageState extends State<ProfileDetailsPage> {
+
+  bool signedOut = false;
+
+  Future<void> signOut() async {
+    try {
+      await auth.signOut();
+      print('Successfully signed out');
+      signedOut = true;
+    } on FirebaseAuthException catch (e) {
+      print('Sign-out failed: ${e.message}');
+    }
+  }
+
   int selectedIndex = 0;
   void navigateBottomBar(int index){
     setState(() {
@@ -34,6 +48,8 @@ class _ProfileDetailsPageState extends State<ProfileDetailsPage> {
   String _birthday = '';
   String _phoneNumber = '';
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final FirebaseAuth auth = FirebaseAuth.instance;
+
 
   @override
   Widget build(BuildContext context) {
@@ -169,6 +185,31 @@ class _ProfileDetailsPageState extends State<ProfileDetailsPage> {
                       ),
                     ),
                   ),
+                  ElevatedButton(
+                    onPressed: () async {
+                      await signOut();
+                      if (!context.mounted) return;
+                      //Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
+                      if (signedOut == true){
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => Login()),
+                        );
+                      }
+                    },
+                    style: ButtonStyle(
+                      backgroundColor:
+                      MaterialStateProperty.all<Color>(const Color.fromRGBO(255,255,255,100)),
+                      foregroundColor:
+                      MaterialStateProperty.all<Color>(Colors.black),
+                    ),
+                    child: const Text(
+                      '    Sign out    ',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -187,8 +228,8 @@ class EditProfilePage extends StatefulWidget {
   final String birthday;
   final String phoneNumber;
 
-  EditProfilePage(
-      {required this.name, required this.birthday, required this.phoneNumber});
+  const EditProfilePage(
+      {super.key, required this.name, required this.birthday, required this.phoneNumber});
 
   @override
   _EditProfilePageState createState() => _EditProfilePageState();

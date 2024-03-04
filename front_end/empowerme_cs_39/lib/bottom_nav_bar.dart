@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:empowerme_cs_39/profile.dart';
 
+import 'home_page.dart';
+
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({super.key, required this.onTap});
 
@@ -37,7 +39,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
             });
             //Navigator.pushNamed(context, '/homepage');
             try{
-            Navigator.pushNamedAndRemoveUntil(context, '/homepage', (route) => false);
+            Navigator.pushReplacementNamed(context, '/homepage');
             } catch (e) {
               print(e);
             }
@@ -54,7 +56,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
               widget.onTap(index);
             });
             try{
-              //Navigator.pushNamedAndRemoveUntil(context, '/profilepage', (route) => false);
+              /*Navigator.pushReplacementNamed(context, '/profilepage');*/
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => ProfilePage()),
@@ -65,8 +67,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
           }
         },
         items: [
-          const BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined, size: 40),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home_outlined, size: 40, color: selectedIndex == 0 ? Colors.blue : Colors.grey,),
             label: 'Home',
           ),
           BottomNavigationBarItem(
@@ -80,8 +82,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
             ),
             label: 'Detect',
           ),
-          const BottomNavigationBarItem(
-            icon: Icon(Icons.person_outline_rounded, size: 40),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person_outline_rounded, size: 40, color: selectedIndex == 2 ? Colors.blue : Colors.grey,),
             label: 'Profile',
           ),
         ],
