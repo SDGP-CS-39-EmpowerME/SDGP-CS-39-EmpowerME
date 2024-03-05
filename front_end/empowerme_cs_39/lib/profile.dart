@@ -3,29 +3,24 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import 'bottom_nav_bar.dart';
-
 
 class ProfilePage extends StatelessWidget {
-  const ProfilePage({super.key});
+  const ProfilePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       home: ProfileDetailsPage(),
     );
   }
 }
 
 class ProfileDetailsPage extends StatefulWidget {
-  const ProfileDetailsPage({super.key});
-
   @override
   _ProfileDetailsPageState createState() => _ProfileDetailsPageState();
 }
 
 class _ProfileDetailsPageState extends State<ProfileDetailsPage> {
-
   bool signedOut = false;
 
   Future<void> signOut() async {
@@ -37,187 +32,126 @@ class _ProfileDetailsPageState extends State<ProfileDetailsPage> {
       print('Sign-out failed: ${e.message}');
     }
   }
-
-  int selectedIndex = 0;
-  void navigateBottomBar(int index){
-    setState(() {
-      selectedIndex = index;
-    });
-  }
-  String _name = '';
-  String _birthday = '';
-  String _phoneNumber = '';
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  // Permanent profile details
+  String name = 'User_008';
+  String birthday = '01/01/1990';
+  String phoneNumber = '0712345678';
   final FirebaseAuth auth = FirebaseAuth.instance;
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(100.0),
-        child: AppBar(
-          backgroundColor: Colors.lightBlue,
-          shape: CustomShapeBorder(),
-          title: const Padding(
-            padding: EdgeInsets.only(left: 16.0),
-            child: Text(
-              'Profile',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 28, // Increased font size
-              ),
-            ),
+      resizeToAvoidBottomInset: true, // Adjusts the screen when the keyboard appears
+      appBar: AppBar(
+        backgroundColor: Colors.lightBlue,
+        shape: CustomShapeBorder(),
+        title: const Text(
+          'Profile',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 28,
           ),
-          centerTitle: false, // Align the title to the corner
         ),
+        centerTitle: true,
+        leading: const SizedBox(),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Center(
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    width: 120,
-                    height: 120,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.lightBlue, // Surrounding color
-                    ),
-                    child: Center(
-                      child: Container(
-                        width: 100,
-                        height: 100,
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.black, // Icon color
-                        ),
-                        child: const Icon(
-                          Icons.person,
-                          size: 80,
-                          color: Colors.lightBlue, // Surrounding color
+      body: SingleChildScrollView(
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(Icons.account_circle, size: 50),
+                const SizedBox(height: 10),
+                profileField(Icons.person, 'Name', name),
+                const SizedBox(height: 10),
+                profileField(Icons.cake, 'Birthday', birthday),
+                const SizedBox(height: 10),
+                profileField(Icons.phone, 'Phone Number', phoneNumber),
+                const SizedBox(height: 10),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => EditProfilePage(
+                          name: name,
+                          birthday: birthday,
+                          phoneNumber: phoneNumber,
                         ),
                       ),
+                    );
+                  },
+                  style: ButtonStyle(
+                    backgroundColor:
+                    MaterialStateProperty.all<Color>(Colors.lightBlue),
+                    foregroundColor:
+                    MaterialStateProperty.all<Color>(Colors.black),
+                  ),
+                  child: const Text(
+                    'Edit Profile',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
                     ),
                   ),
-                  const SizedBox(height: 20),
-                  TextFormField(
-                    decoration: const InputDecoration(
-                      labelText: 'Name',
-                      prefixIcon: Icon(Icons.person),
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter your name';
-                      }
-                      return null;
-                    },
-                    onChanged: (value) {
-                      setState(() {
-                        _name = value;
-                      });
-                    },
+                ),
+                ElevatedButton(
+                  onPressed: () async {
+                    await signOut();
+                    if (!context.mounted) return;
+                    //Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
+                    if (signedOut == true){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Login()),
+                      );
+                    }
+                  },
+                  style: ButtonStyle(
+                    backgroundColor:
+                    MaterialStateProperty.all<Color>(const Color.fromRGBO(255,255,255,100)),
+                    foregroundColor:
+                    MaterialStateProperty.all<Color>(Colors.black),
                   ),
-                  TextFormField(
-                    decoration: const InputDecoration(
-                      labelText: 'Birthday',
-                      prefixIcon: Icon(Icons.cake),
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter your birthday';
-                      }
-                      return null;
-                    },
-                    onChanged: (value) {
-                      setState(() {
-                        _birthday = value;
-                      });
-                    },
-                  ),
-                  TextFormField(
-                    decoration: const InputDecoration(
-                      labelText: 'Phone Number',
-                      prefixIcon: Icon(Icons.phone),
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter your phone number';
-                      }
-                      return null;
-                    },
-                    onChanged: (value) {
-                      setState(() {
-                        _phoneNumber = value;
-                      });
-                    },
-                  ),
-                  const SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => EditProfilePage(
-                              name: _name,
-                              birthday: _birthday,
-                              phoneNumber: _phoneNumber,
-                            ),
-                          ),
-                        );
-                      }
-                    },
-                    style: ButtonStyle(
-                      backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.lightBlue),
-                      foregroundColor:
-                      MaterialStateProperty.all<Color>(Colors.black),
-                    ),
-                    child: const Text(
-                      'Next',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
+                  child: const Text(
+                    '    Sign out    ',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                  ElevatedButton(
-                    onPressed: () async {
-                      await signOut();
-                      if (!context.mounted) return;
-                      //Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
-                      if (signedOut == true){
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => Login()),
-                        );
-                      }
-                    },
-                    style: ButtonStyle(
-                      backgroundColor:
-                      MaterialStateProperty.all<Color>(const Color.fromRGBO(255,255,255,100)),
-                      foregroundColor:
-                      MaterialStateProperty.all<Color>(Colors.black),
-                    ),
-                    child: const Text(
-                      '    Sign out    ',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+                ),
+
+              ],
             ),
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavBar(
-        onTap: (index) => navigateBottomBar(index),
+    );
+  }
+
+  Widget profileField(IconData icon, String label, String value) {
+    return Container(
+      width: MediaQuery.of(context).size.width * 0.7,
+      height: MediaQuery.of(context).size.height * 0.1, // Adjusted height
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        color: Colors.grey[200], // Light gray color
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(icon),
+          const SizedBox(width: 10),
+          Text(
+            value,
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold, // Make the text bold
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -228,8 +162,11 @@ class EditProfilePage extends StatefulWidget {
   final String birthday;
   final String phoneNumber;
 
-  const EditProfilePage(
-      {super.key, required this.name, required this.birthday, required this.phoneNumber});
+  const EditProfilePage({
+    required this.name,
+    required this.birthday,
+    required this.phoneNumber,
+  });
 
   @override
   _EditProfilePageState createState() => _EditProfilePageState();
@@ -252,134 +189,137 @@ class _EditProfilePageState extends State<EditProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(100.0),
-        child: AppBar(
-          backgroundColor: Colors.lightBlue,
-          shape: CustomShapeBorder(),
-          title: const Padding(
-            padding: EdgeInsets.only(left: 16.0),
-            child: Text(
-              'Edit Profile',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 28, // Increased font size
-              ),
-            ),
+      appBar: AppBar(
+        backgroundColor: Colors.lightBlue,
+        shape: CustomShapeBorder(),
+        title: const Text(
+          'Edit Profile',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 28,
           ),
-          centerTitle: false, // Align the title to the corner
         ),
+        centerTitle: true,
+        leading: const SizedBox(),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              TextFormField(
-                controller: _nameController,
-                decoration: const InputDecoration(
-                  labelText: 'Name',
-                  prefixIcon: Icon(Icons.person),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                profileInputField(
+                  Icons.person,
+                  'Name',
+                  _nameController,
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your name';
-                  }
-                  return null;
-                },
-              ),
-              TextFormField(
-                controller: _birthdayController,
-                decoration: const InputDecoration(
-                  labelText: 'Birthday',
-                  prefixIcon: Icon(Icons.cake),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your birthday';
-                  }
-                  return null;
-                },
-              ),
-              TextFormField(
-                controller: _phoneNumberController,
-                decoration: const InputDecoration(
-                  labelText: 'Phone Number',
-                  prefixIcon: Icon(Icons.phone),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your phone number';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    // Save updated details here
-                    String updatedName = _nameController.text;
-                    String updatedBirthday = _birthdayController.text;
-                    String updatedPhoneNumber = _phoneNumberController.text;
+                const SizedBox(height: 20),
+                profileInputField(
+                  Icons.cake,
+                  'Birthday',
+                  _birthdayController,
+                  onTap: () async {
+                    final DateTime? pickedDate = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(1900),
+                      lastDate: DateTime.now(),
+                    );
 
-                    // Process the form data, such as saving it to a database
-                    // For demonstration, we'll just print it
-                    if (kDebugMode) {
+                    if (pickedDate != null) {
+                      setState(() {
+                        _birthdayController.text =
+                        "${pickedDate.month}/${pickedDate.day}/${pickedDate.year}";
+                      });
+                    }
+                  },
+                ),
+                const SizedBox(height: 20),
+                profileInputField(
+                  Icons.phone,
+                  'Phone Number',
+                  _phoneNumberController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your phone number';
+                    }
+                    if (!RegExp(r'^[0-9]{10}$').hasMatch(value)) {
+                      return 'Please enter a valid 10 digit phone number';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      // Save updated details here
+                      String updatedName = _nameController.text;
+                      String updatedBirthday = _birthdayController.text;
+                      String updatedPhoneNumber = _phoneNumberController.text;
+
+                      // Process the form data, such as saving it to a database
+                      // For demonstration, we'll just print it
                       print('Updated Name: $updatedName');
                       print('Updated Birthday: $updatedBirthday');
                       print('Updated Phone Number: $updatedPhoneNumber');
-                    }
 
-                    // Show a snackbar message
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Details saved successfully'),
-                      ),
-                    );
-                  }
-                },
-                style: ButtonStyle(
-                  backgroundColor:
-                  MaterialStateProperty.all<Color>(Colors.lightBlue),
-                  foregroundColor:
-                  MaterialStateProperty.all<Color>(Colors.black),
-                ),
-                child: const Text(
-                  'Save',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
+                      // Show a snackbar message
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Details saved successfully'),
+                        ),
+                      );
+                    }
+                  },
+                  style: ButtonStyle(
+                    backgroundColor:
+                    MaterialStateProperty.all<Color>(Colors.lightBlue),
+                    foregroundColor:
+                    MaterialStateProperty.all<Color>(Colors.black),
+                  ),
+                  child: const Text(
+                    'Save',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 10), // Adding space here
-              ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    // Enable editing by clearing the controller's text
-                    _nameController.clear();
-                    _birthdayController.clear();
-                    _phoneNumberController.clear();
-                  });
-                },
-                style: ButtonStyle(
-                  backgroundColor:
-                  MaterialStateProperty.all<Color>(Colors.lightBlue),
-                  foregroundColor:
-                  MaterialStateProperty.all<Color>(Colors.black),
-                ),
-                child: const Text(
-                  'Edit Profile',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget profileInputField(
+      IconData icon,
+      String label,
+      TextEditingController controller, {
+        GestureTapCallback? onTap,
+        String? Function(String?)? validator,
+      }) {
+    return Container(
+      width: MediaQuery.of(context).size.width * 1.0,
+      height: MediaQuery.of(context).size.height * 0.07,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        color: Colors.grey[200], // Light gray color
+      ),
+      child: TextFormField(
+        controller: controller,
+        textAlign: TextAlign.center,
+        decoration: InputDecoration(
+          prefixIcon: Icon(icon),
+          labelText: label,
+          border: InputBorder.none,
+        ),
+        validator: validator,
+        onTap: onTap,
       ),
     );
   }
@@ -400,5 +340,3 @@ class CustomShapeBorder extends ContinuousRectangleBorder {
     return path;
   }
 }
-
-
