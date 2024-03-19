@@ -71,7 +71,7 @@ class _SmartwatchDetailsPageState extends State<SmartwatchDetails> {
                 Navigator.of(context).pop(); // Handlheige back navigation here
                 },
               child: Container(
-                padding: EdgeInsets.all(10.0),
+                padding: const EdgeInsets.all(10.0),
                 child: const Icon(
                   Icons.arrow_back_ios, // Replace this with your custom icon
                   color: Colors.white,
@@ -105,7 +105,7 @@ class _SmartwatchDetailsPageState extends State<SmartwatchDetails> {
                   print('Icon button pressed');
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Connect_smartwatch()),
+                    MaterialPageRoute(builder: (context) => const Connect_smartwatch()),
                   );
                   // Navigator.push(
                   //   context,

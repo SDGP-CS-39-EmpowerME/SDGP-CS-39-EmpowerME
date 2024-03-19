@@ -38,6 +38,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
             try{
             Navigator.pushNamedAndRemoveUntil(context, '/homepage', (route) => false);
             } catch (e) {
+              // ignore: avoid_print
               print(e);
             }
           }
@@ -55,6 +56,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
             try{
               Navigator.pushNamedAndRemoveUntil(context, '/profilepage', (route) => false);
             } catch (e) {
+              // ignore: avoid_print
               print(e);
             }
           }

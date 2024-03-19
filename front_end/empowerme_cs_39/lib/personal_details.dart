@@ -1,4 +1,5 @@
 
+import 'package:empowerme_cs_39/family_details.dart';
 import 'package:flutter/material.dart';
 
 class RegisterPersonalDetails extends StatelessWidget {
@@ -62,6 +63,7 @@ class RegisterPersonalDetails extends StatelessWidget {
           }),
           ElevatedButton(
             onPressed: () {
+             
               if (name.isEmpty ||
                   email.isEmpty ||
                   nic.isEmpty ||
@@ -73,13 +75,16 @@ class RegisterPersonalDetails extends StatelessWidget {
                   ),
                 );
               } else {
-                Navigator.pushNamed(context, '/family_details');
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const RegisterFamilyDetails()));
               }
-            },
+              
+             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.blue,
             ),
+            
             child: const Text('Next'),
+            
           ),
         ],
       ),

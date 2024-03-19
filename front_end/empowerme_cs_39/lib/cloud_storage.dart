@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'cloud_storage_access_page.dart';
 
 
+// ignore: use_key_in_widget_constructors
 class CloudStorage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -16,24 +17,25 @@ class CloudStorage extends StatelessWidget {
   }
 }
 
+// ignore: use_key_in_widget_constructors
 class CloudStoragePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Cloud Storage'),
-        backgroundColor: Color(0xFF3377A8),
+        title: const Text('Cloud Storage'),
+        backgroundColor: const Color(0xFF3377A8),
       ),
       body: Container(
-        padding: EdgeInsets.all(16.0),
-        color: Color(0xFF3377A8),
+        padding: const EdgeInsets.all(16.0),
+        color: const Color(0xFF3377A8),
         child: Column(
           children: [
-            SizedBox(height: 20.0),
-            Icon(Icons.cloud, size: 80.0, color: Colors.white),
-            SizedBox(height: 20.0),
+            const SizedBox(height: 20.0),
+            const Icon(Icons.cloud, size: 80.0, color: Colors.white),
+            const SizedBox(height: 20.0),
             TextFormField(
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Backup Account (Gmail)',
                 labelStyle: TextStyle(color: Colors.white),
                 enabledBorder: OutlineInputBorder(
@@ -43,7 +45,7 @@ class CloudStoragePage extends StatelessWidget {
                   borderSide: BorderSide(color: Colors.white),
                 ),
               ),
-              style: TextStyle(color: Colors.white),
+              style: const TextStyle(color: Colors.white),
               keyboardType: TextInputType.emailAddress,
               validator: (value) {
                 if (value == null || value.isEmpty) {
@@ -55,9 +57,9 @@ class CloudStoragePage extends StatelessWidget {
                 return null;
               },
             ),
-            SizedBox(height: 20.0),
+            const SizedBox(height: 20.0),
             TextFormField(
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Last Upload Date and Time',
                 labelStyle: TextStyle(color: Colors.white),
                 enabledBorder: OutlineInputBorder(
@@ -67,10 +69,10 @@ class CloudStoragePage extends StatelessWidget {
                   borderSide: BorderSide(color: Colors.white),
                 ),
               ),
-              style: TextStyle(color: Colors.white),
+              style: const TextStyle(color: Colors.white),
               keyboardType: TextInputType.datetime,
             ),
-            SizedBox(height: 20.0),
+            const SizedBox(height: 20.0),
             GestureDetector(
               onTap: () {
                 // Handle dropdown menu visibility
@@ -80,8 +82,8 @@ class CloudStoragePage extends StatelessWidget {
                   border: Border.all(color: Colors.white),
                   borderRadius: BorderRadius.circular(5.0),
                 ),
-                padding: EdgeInsets.all(10.0),
-                child: Row(
+                padding: const EdgeInsets.all(10.0),
+                child: const Row(
                   children: [
                     Expanded(
                       child: Text(
@@ -94,7 +96,7 @@ class CloudStoragePage extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 20.0),
+            const SizedBox(height: 20.0),
             ElevatedButton(
               onPressed: () {
                 // Navigate to the next page
@@ -103,7 +105,7 @@ class CloudStoragePage extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => CloudStorageAccessPage()),
                 );
               },
-              child: Text('Cloud Storage Access'),
+              child: const Text('Cloud Storage Access'),
             ),
           ],
         ),

@@ -55,7 +55,7 @@ class Connect_smartwatch extends StatelessWidget {
                         ),
                       ],
                     ),
-                    child: Image.asset("assets/Blutooth.png"),
+                     child: Image.asset("assets/images-connectsmartwatch/Blutooth.png"),
                   );
                 },
               ),

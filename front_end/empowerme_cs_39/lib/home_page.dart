@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors, duplicate_ignore
+
 import 'package:empowerme_cs_39/bottom_nav_bar.dart';
 import 'package:empowerme_cs_39/cloud_storage.dart';
 import 'package:empowerme_cs_39/saved_files.dart';
@@ -32,14 +34,17 @@ class _HomePageState extends State<HomePage> {
     switch (index){
       case 0:
         //code for record page
+        // ignore: duplicate_ignore
         Navigator.push(
           context,
+          // ignore: prefer_const_constructors
           MaterialPageRoute(builder: (context) => voiceRecorderPage()),
         );
         break;
       case 1:
         Navigator.push(
           context,
+          // ignore: prefer_const_constructors
           MaterialPageRoute(builder: (context) => SmartwatchDetails()),
         );
         break;

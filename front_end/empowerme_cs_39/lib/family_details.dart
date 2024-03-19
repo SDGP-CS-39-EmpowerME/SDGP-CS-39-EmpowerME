@@ -1,4 +1,7 @@
+
+import 'package:empowerme_cs_39/password_page.dart';
 import 'package:flutter/material.dart';
+
 class RegisterFamilyDetails extends StatelessWidget {
   const RegisterFamilyDetails({Key? key}) : super(key: key);
 
@@ -55,6 +58,7 @@ class RegisterFamilyDetails extends StatelessWidget {
           }),
           ElevatedButton(
             onPressed: () {
+              
               if(personName.isEmpty ||
                   personBirthday.isEmpty ||
                   personPhone.isEmpty ||
@@ -65,8 +69,10 @@ class RegisterFamilyDetails extends StatelessWidget {
                   )
                 );
               } else{
-                 Navigator.pushNamed(context, '/password');
+                 Navigator.push(context, MaterialPageRoute(builder: (context) => const RegisterPassword()));
             }
+           
+             
           },
           style: ElevatedButton.styleFrom(
               backgroundColor: Colors.blue,

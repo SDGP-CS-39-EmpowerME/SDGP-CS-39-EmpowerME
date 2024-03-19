@@ -18,8 +18,10 @@ class ProfilePage extends StatelessWidget {
   }
 }
 
+// ignore: use_key_in_widget_constructors
 class ProfileDetailsPage extends StatefulWidget {
   @override
+  // ignore: library_private_types_in_public_api
   _ProfileDetailsPageState createState() => _ProfileDetailsPageState();
 }
 
@@ -187,10 +189,12 @@ class EditProfilePage extends StatefulWidget {
   final String birthday;
   final String phoneNumber;
 
+  // ignore: prefer_const_constructors_in_immutables, use_key_in_widget_constructors
   EditProfilePage(
       {required this.name, required this.birthday, required this.phoneNumber});
 
   @override
+  // ignore: library_private_types_in_public_api
   _EditProfilePageState createState() => _EditProfilePageState();
 }
 

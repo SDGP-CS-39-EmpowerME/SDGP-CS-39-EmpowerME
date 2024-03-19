@@ -36,7 +36,7 @@ class _SavedFilesPageState extends State<SavedFilesPage> {
             Navigator.of(context).pop(); // Handlheige back navigation here
             },
             child: Container(
-              padding: EdgeInsets.all(10.0),
+              padding: const EdgeInsets.all(10.0),
               child: const Icon(
                 Icons.arrow_back_ios, // Replace this with your custom icon
                 color: Colors.white,
@@ -92,6 +92,7 @@ class _SavedFilesPageState extends State<SavedFilesPage> {
                     // Handle button tap for the specific word
                   },
                   style: ElevatedButton.styleFrom(
+                    // ignore: deprecated_member_use
                     primary: Colors.transparent, // Make background transparent
                     elevation: 0, // Remove default elevation
                     padding: const EdgeInsets.all(10), // Button's internal padding

@@ -6,6 +6,7 @@ void main() {
   runApp(const login());
 }
 
+// ignore: camel_case_types
 class login extends StatelessWidget {
   const login({Key? key}) : super(key: key);
 
@@ -47,7 +48,7 @@ class login extends StatelessWidget {
                       fontSize: 18,
                     ),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   TextFormField(
                     decoration: const InputDecoration(
                       labelText: 'Email or Phone Number',
@@ -64,7 +65,7 @@ class login extends StatelessWidget {
                       return null;
                     },
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   TextFormField(
                     decoration: const InputDecoration(
                       labelText: 'Password',
@@ -82,7 +83,7 @@ class login extends StatelessWidget {
                       return null;
                     },
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Row(
                     children: [
                       Expanded(
@@ -96,10 +97,11 @@ class login extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30),
                   ElevatedButton(
                     onPressed: () {},
                     style: ElevatedButton.styleFrom(
+                      // ignore: deprecated_member_use
                       primary: Colors.blue,
                     ),
                     child: const Text(
@@ -110,13 +112,14 @@ class login extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   ElevatedButton(
                     onPressed: () {Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => HomePage()),
+                      MaterialPageRoute(builder: (context) => const HomePage()),
                     );},
                     style: ElevatedButton.styleFrom(
+                      // ignore: deprecated_member_use
                       primary: Colors.blue,
                     ),
                     child: const Text(
@@ -127,7 +130,7 @@ class login extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -139,7 +142,7 @@ class login extends StatelessWidget {
                         onPressed: () {
                           Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => RegisterPersonalDetails()),
+                      MaterialPageRoute(builder: (context) => const RegisterPersonalDetails()),
                     );
                         },
                         child: Text(
