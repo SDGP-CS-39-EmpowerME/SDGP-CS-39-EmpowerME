@@ -1,137 +1,185 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:webview_flutter/webview_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:file_picker/file_picker.dart';
+import 'dart:convert';
 
-import 'cloud_storage_access_page.dart';
-
-
-class CloudStorage extends StatelessWidget {
+class CloudStorage extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Cloud Storage Page',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: CloudStoragePage(),
-    );
-  }
+  _CloudStorageState createState() => _CloudStorageState();
 }
 
-class CloudStoragePage extends StatelessWidget {
+class _CloudStorageState extends State<CloudStorage> {
+  bool _autoUploadEnabled = false;
+  String _currentLoginEmail = '';
+  String _lastUploadedFile = '';
+  String _authUrl = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Cloud Storage'),
-        backgroundColor: Color(0xFF3377A8),
+        title: Text('Google Drive Auto Upload'),
       ),
-      body: Container(
-        padding: EdgeInsets.all(16.0),
-        color: Color(0xFF3377A8),
-        child: Column(
-          children: [
-            SizedBox(height: 20.0),
-            Icon(Icons.cloud, size: 80.0, color: Colors.white),
-            SizedBox(height: 20.0),
-            TextFormField(
-              decoration: InputDecoration(
-                labelText: 'Backup Account (Gmail)',
-                labelStyle: TextStyle(color: Colors.white),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white),
-                ),
-              ),
-              style: TextStyle(color: Colors.white),
-              keyboardType: TextInputType.emailAddress,
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter your email';
-                }
-                if (!isValidEmail(value)) {
-                  return 'Please enter a valid email address';
-                }
-                return null;
-              },
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Text(
+              'Current Login Email: $_currentLoginEmail',
+              style: TextStyle(fontSize: 16.0),
             ),
-            SizedBox(height: 20.0),
-            TextFormField(
-              decoration: InputDecoration(
-                labelText: 'Last Upload Date and Time',
-                labelStyle: TextStyle(color: Colors.white),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white),
+          ),
+          Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Row(
+              children: [
+                Text('Auto Upload: '),
+                Switch(
+                  value: _autoUploadEnabled,
+                  onChanged: (value) {
+                    setState(() {
+                      _autoUploadEnabled = value;
+                      if (_autoUploadEnabled) {
+                        // Trigger the authentication process
+                        initiateAuthentication();
+                      }
+                    });
+                  },
                 ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white),
-                ),
-              ),
-              style: TextStyle(color: Colors.white),
-              keyboardType: TextInputType.datetime,
+              ],
             ),
-            SizedBox(height: 20.0),
-            GestureDetector(
-              onTap: () {
-                // Handle dropdown menu visibility
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.white),
-                  borderRadius: BorderRadius.circular(5.0),
-                ),
-                padding: EdgeInsets.all(10.0),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        'View Full History',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                    Icon(Icons.arrow_drop_down, color: Colors.white),
-                  ],
-                ),
+          ),
+          Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Text(
+              'Last Uploaded File: $_lastUploadedFile',
+              style: TextStyle(fontSize: 16.0),
+            ),
+          ),
+          // WebView widget to display the authentication page
+          if (_authUrl.isNotEmpty)
+            Expanded(
+              child: WebView(
+                initialUrl: _authUrl,
+                javascriptMode: JavascriptMode.unrestricted,
+                onPageFinished: (String url) {
+                  if (url.startsWith('https://3582-45-121-90-169.ngrok-free.app/oauth2callback')) {
+                    // Extract code from URL
+                    var uri = Uri.parse(url);
+                    var code = uri.queryParameters['code'];
+                    // Exchange code for tokens
+                    exchangeCodeForTokens(code);
+                    // Open the URL in the default browser again
+                    launchAuthUrlAgain();
+                  }
+                },
               ),
             ),
-            SizedBox(height: 20.0),
-            ElevatedButton(
-              onPressed: () {
-                // Navigate to the next page
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => CloudStorageAccessPage()),
-                );
-              },
-              child: Text('Cloud Storage Access'),
-            ),
-          ],
-        ),
+        ],
       ),
     );
   }
 
-  bool isValidEmail(String value) {
-    // Simple email validation regex
-    final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
-    return emailRegex.hasMatch(value);
+  void initiateAuthentication() async {
+    // Directly open the authentication URL in the default browser or web view
+    var authUrl = 'https://accounts.google.com/o/oauth2/v2/auth?access_type=offline&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdrive&response_type=code&client_id=800910222707-27hmuoopb6ri9oin95erm4da9qmbva7u.apps.googleusercontent.com&redirect_uri=https%3A%2F%2F3582-45-121-90-169.ngrok-free.app%2Foauth2callback';
+
+    // Open the URL in the default browser or web view
+    if (await canLaunch(authUrl)) {
+      await launch(authUrl);
+    } else {
+      print('Could not launch $authUrl');
+    }
+  }
+
+  void launchAuthUrlAgain() async {
+    // Open the URL in the default browser or web view
+    if (await canLaunch(_authUrl)) {
+      await launch(_authUrl);
+    } else {
+      print('Could not launch $_authUrl');
+    }
+  }
+
+  void exchangeCodeForTokens(String? code) async {
+    if (code != null) {
+      // Exchange code for tokens with backend
+      var response = await http.get(Uri.parse('https://3582-45-121-90-169.ngrok-free.app/oauth2callback?code=$code'));
+      var tokens = jsonDecode(response.body);
+
+      // Store tokens, update UI, and trigger auto-upload
+      setState(() {
+        _currentLoginEmail = tokens['email'] as String; // Update email if available
+        _lastUploadedFile = tokens['lastUploadedFile'] as String; // Update last uploaded file
+      });
+      if (_autoUploadEnabled) {
+        autoUploadFiles(tokens['tokens'] as Map<String, dynamic>);
+      }
+    }
+  }
+
+  void autoUploadFiles(Map<String, dynamic> tokens) async {
+    // Implement auto-upload functionality here
+    // You can make authenticated requests to upload files to Google Drive using the tokens
+  }
+  Future<void> _getFolderPathAndUpload() async {
+    try {
+      String? folderPath = await _getFolderPath();
+      if (folderPath != null) {
+        _sendFolderPathToBackend(folderPath);
+      } else {
+        print('No folder path selected');
+      }
+    } catch (error) {
+      print('Error selecting folder path: $error');
+    }
+  }
+
+  Future<String?> _getFolderPath() async {
+    FilePickerResult? result = (await FilePicker.platform.getDirectoryPath()) as FilePickerResult?;
+    if (result != null) {
+      // Assuming you only pick one path, you can access it like this
+      String? folderPath = result.paths.first;
+      return folderPath;
+    }
+    return null;
+  }
+
+  void _sendFolderPathToBackend(String folderPath) async {
+    try {
+      var response = await http.post(
+        Uri.parse(
+            'https://3582-45-121-90-169.ngrok-free.app'), // Replace with your backend URL
+        body: {'com.android.externalstorage.documents/tree/primary%3ADownload%2FAudios/document/primary%3ADownload%2FAudios': folderPath},
+      );
+
+      if (response.statusCode == 200) {
+        print('Folder path sent to backend');
+      } else {
+        print('Failed to send folder path to backend');
+      }
+    } catch (error) {
+      print('Error sending folder path to backend: $error');
+    }
   }
 }
 
-// class CloudStorageAccessPage extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('Cloud Storage Access'),
-//         backgroundColor: Color(0xFF3377A8),
-//       ),
-//       body: Center(
-//         child: Text(
-//           'This is the Cloud Storage Access page',
-//           style: TextStyle(fontSize: 20.0),
-//         ),
-//       ),
-//     );
-//   }
-// }
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: CloudStorage(),
+    );
+  }
+}
+
+void main() {
+  runApp(MyApp());
+}
