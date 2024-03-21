@@ -1,5 +1,6 @@
 import 'package:empowerme_cs_39/bottom_nav_bar.dart';
 import 'package:empowerme_cs_39/cloud_storage.dart';
+import 'package:empowerme_cs_39/new_saved_files.dart';
 import 'package:empowerme_cs_39/saved_files.dart';
 import 'package:empowerme_cs_39/smartwatch_details_page.dart';
 import 'package:empowerme_cs_39/manual_upload.dart';
@@ -46,7 +47,7 @@ class _HomePageState extends State<HomePage> {
       case 2:
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => SavedFilesPage()),
+          MaterialPageRoute(builder: (context) => SavedFilesNew()),
         );
         break;
       case 3:
@@ -70,16 +71,16 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[100],
+      backgroundColor:Colors.white/*grey[200]*/,
       appBar: PreferredSize(
         preferredSize:const Size.fromHeight(75.0),
         child: AppBar(
         title: const Text("Home"),
-        centerTitle: true,
+        centerTitle: false,
         titleTextStyle: const TextStyle(
-          fontSize: 40,
-          fontWeight: FontWeight.w800,
-          color: Color.fromRGBO(0, 124, 207, 1.0),
+          fontSize: 30,
+          /*fontWeight: FontWeight.w800,*/
+          color: Colors.white,
         ),
         backgroundColor: const Color.fromRGBO(0, 153, 255, 1.0),
         actions: [
@@ -92,18 +93,18 @@ class _HomePageState extends State<HomePage> {
             onPressed: () => emergencyCall(), // define onPressed logic here
           ),
         ],
-      ),
+              ),
     ),
 
       body: Padding(
-        padding: const EdgeInsets.only(top: 70, left: 50, right: 50, bottom: 50),
+        padding: const EdgeInsets.only(top: 80, left: 25, right: 25, bottom: 50),
         child: Center(
           child: GridView.builder(
             itemCount: mainMenu.length,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
-              mainAxisSpacing: 30,
-              crossAxisSpacing: 30,
+              mainAxisSpacing: 20,
+              crossAxisSpacing: 20,
             ),
             itemBuilder: (context, index) {
               final word = mainMenu[index];
@@ -115,9 +116,9 @@ class _HomePageState extends State<HomePage> {
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.5),
-                      blurRadius: 10, // Adjust blur radius as needed
-                      offset: const Offset(2, 5), // Adjust offset for shadow position
+                      color: Colors.black.withOpacity(0.15),
+                      blurRadius: 5, // Adjust blur radius as needed
+                      offset: const Offset(0, 3), // Adjust offset for shadow position
                     ),
                   ],
                 ),
@@ -141,14 +142,14 @@ class _HomePageState extends State<HomePage> {
                           style: const TextStyle(
                             fontSize: 25,
                             fontWeight: FontWeight.bold,
-                            color: Colors.black,
+                            color: Color.fromRGBO(0, 0, 0, 0.6),
                           ),
                         ),
                       ),
                       // Position image within the button container
                       Positioned(
-                        top: 50, // Adjust vertical position as needed
-                        left: 50, // Adjust horizontal position as needed
+                        top: 60, // Adjust vertical position as needed
+                        left: 60, // Adjust horizontal position as needed
                         child: Image.asset(
                           image,
                           width: 60,

@@ -29,6 +29,7 @@ class Login extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: Colors.blue, // Set primary color theme
       ),
@@ -126,9 +127,8 @@ class Login extends StatelessWidget {
                       signIn().then((_) {
                         // Login successful! Navigate to HomePage
                         if (signInSuccess == true){
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => const HomePage()),
+                          Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(builder: (context) => HomePage()),
                           );
                         }
                         else if (signInSuccess == false){
@@ -181,8 +181,7 @@ class Login extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   ElevatedButton(
-                    onPressed: () {Navigator.push(
-                      context,
+                    onPressed: () {Navigator.of(context).pushReplacement(
                       MaterialPageRoute(builder: (context) => HomePage()),
                     );},
                     style: ElevatedButton.styleFrom(

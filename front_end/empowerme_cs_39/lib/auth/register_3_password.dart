@@ -191,8 +191,7 @@ class _RegisterPasswordState extends State<RegisterPassword> {
                     else {
                       signUp(userData);
                       if (passwordCorrect){
-                        Navigator.push(
-                          context,
+                        Navigator.of(context).pushReplacement(
                           MaterialPageRoute(builder: (context) => HomePage()),
                         );
                       }
