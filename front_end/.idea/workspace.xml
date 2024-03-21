@@ -5,11 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b472bf0a-462c-44b8-bf38-6981ad5d0fad" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/empowerme_cs_39/lib/bg_and_fg_services.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/empowerme_cs_39/lib/files_and_coords.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/empowerme_cs_39/lib/new_saved_files.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/empowerme_cs_39/android/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/empowerme_cs_39/android/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/empowerme_cs_39/lib/auth/firebase_options.dart" beforeDir="false" afterPath="$PROJECT_DIR$/empowerme_cs_39/lib/auth/firebase_options.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/empowerme_cs_39/lib/auth/login.dart" beforeDir="false" afterPath="$PROJECT_DIR$/empowerme_cs_39/lib/auth/login.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/empowerme_cs_39/lib/auth/register_1_personal.dart" beforeDir="false" afterPath="$PROJECT_DIR$/empowerme_cs_39/lib/auth/register_1_personal.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/empowerme_cs_39/lib/auth/register_3_password.dart" beforeDir="false" afterPath="$PROJECT_DIR$/empowerme_cs_39/lib/auth/register_3_password.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/empowerme_cs_39/lib/bottom_nav_bar.dart" beforeDir="false" afterPath="$PROJECT_DIR$/empowerme_cs_39/lib/bottom_nav_bar.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/empowerme_cs_39/lib/home_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/empowerme_cs_39/lib/home_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/empowerme_cs_39/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/empowerme_cs_39/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/empowerme_cs_39/lib/navbar_detection.dart" beforeDir="false" afterPath="$PROJECT_DIR$/empowerme_cs_39/lib/navbar_detection.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/empowerme_cs_39/linux/flutter/generated_plugin_registrant.cc" beforeDir="false" afterPath="$PROJECT_DIR$/empowerme_cs_39/linux/flutter/generated_plugin_registrant.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/empowerme_cs_39/linux/flutter/generated_plugins.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/empowerme_cs_39/linux/flutter/generated_plugins.cmake" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/empowerme_cs_39/macos/Flutter/GeneratedPluginRegistrant.swift" beforeDir="false" afterPath="$PROJECT_DIR$/empowerme_cs_39/macos/Flutter/GeneratedPluginRegistrant.swift" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/empowerme_cs_39/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/empowerme_cs_39/pubspec.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/empowerme_cs_39/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/empowerme_cs_39/pubspec.yaml" afterDir="false" />
@@ -49,7 +60,7 @@
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "io.flutter.reload.alreadyRun": "true",
-    "last_opened_file_path": "D:/EDUCATION/IIT/Year 2/SDGP/S2/Git/SDGP-CS-39-EmpowerME/front_end",
+    "last_opened_file_path": "D:/EDUCATION/IIT/Year 2/saved files",
     "project.structure.last.edited": "Global Libraries",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
