@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart' as path;
 import 'package:http/http.dart' as http;
 import 'dart:io';
 
@@ -45,16 +47,39 @@ class _MyHomePageState extends State<MyHomePage> {
 
 
 
+
+
   Future<void> uploadFile() async {
-    var uri = Uri.parse('https://3582-45-121-90-169.ngrok-free.app/upload'); // Replace with your backend address
-    var request = http.MultipartRequest('POST', uri)
-      ..fields['date'] = dateController.text
-      ..fields['time'] = timeController.text
-      ..fields['location'] = locationController.text
-      ..files.add(await http.MultipartFile.fromPath('file', _file.path));
+    if (dateController.text.isEmpty ||
+        timeController.text.isEmpty ||
+        locationController.text.isEmpty) {
+      print('Please enter date, time, and location');
+      return;
+    }
+
+    if (_file.path.isEmpty) {
+      print('No file selected');
+      return;
+    }
+
+    // Extract file extension
+    String extension = path.extension(_file.path);
+
+    // Generate new file name using date, time, and location
+    String fileName =
+        '${dateController.text}_${timeController.text}_${locationController.text}$extension';
 
     try {
+      // Create a multipart request with the new file name
+      var uri = Uri.parse('https://3582-45-121-90-169.ngrok-free.app/upload');
+      var request = http.MultipartRequest('POST', uri)
+        ..files.add(await http.MultipartFile.fromPath('file', _file.path,
+            filename: fileName));
+
+      // Send the request
       var response = await request.send();
+
+      // Check the response
       if (response.statusCode == 200) {
         print('File uploaded successfully');
       } else {
@@ -64,6 +89,8 @@ class _MyHomePageState extends State<MyHomePage> {
       print('Error: $e');
     }
   }
+
+
 
   @override
   Widget build(BuildContext context) {
