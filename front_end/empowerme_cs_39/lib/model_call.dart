@@ -9,7 +9,7 @@ class SendAudioService {
   final service = FlutterBackgroundService();
 
   static void onStart() {
-    Timer.periodic(Duration(seconds: 60), (timer) async {
+    Timer.periodic(Duration(seconds: 3600), (timer) async {
       SendAudioService sendaudioservice = SendAudioService();
       await sendaudioservice
           .sendAudioFiles(); // Use SendAudioService to access static method
@@ -58,7 +58,7 @@ class SendAudioService {
       var request = http.MultipartRequest(
         'POST',
         Uri.parse(
-            'https://7abe-2402-4000-2300-94-c4a4-c94b-14a8-3726.ngrok-free.app/predict'),
+            'https://b3d9-2402-4000-2300-94-8df4-402c-87db-e750.ngrok-free.app/predict'),
       );
 
       // Add the .wav file to the request
