@@ -45,10 +45,6 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-
-
-
-
   Future<void> uploadFile() async {
     if (dateController.text.isEmpty ||
         timeController.text.isEmpty ||
@@ -90,13 +86,18 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('File Upload'),
+        centerTitle: false,
+        titleTextStyle: const TextStyle(
+          fontSize: 30,
+          /*fontWeight: FontWeight.w800,*/
+          color: Colors.white,
+        ),
+        backgroundColor: const Color.fromRGBO(0, 153, 255, 1.0),
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
