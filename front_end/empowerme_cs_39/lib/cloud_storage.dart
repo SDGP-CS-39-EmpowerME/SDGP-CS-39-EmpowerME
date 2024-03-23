@@ -58,12 +58,16 @@ class _CloudStorageState extends State<CloudStorage> {
                   onChanged: (value) {
                     setState(() {
                       _autoUploadEnabled = value;
-                      if (_autoUploadEnabled) {
+                      if (!_autoUploadEnabled) {
+                        // Stop uploading process
+                        stopUploadingProcess();
+                      } else {
                         // Trigger the authentication process
                         initiateAuthentication();
                       }
                     });
                   },
+
                   activeColor: Colors.blue, // Color when switch is on
                   activeTrackColor: Colors.lightBlueAccent, // Color of track when switch is on
                   inactiveThumbColor: Colors.grey, // Color of the thumb when switch is off
@@ -117,6 +121,25 @@ class _CloudStorageState extends State<CloudStorage> {
       print('Could not launch $authUrl');
     }
   }
+
+  void stopUploadingProcess() async {
+    try {
+      var response = await http.post(
+        Uri.parse('https://3582-45-121-90-169.ngrok-free.app/toggleUpload'),
+        body: {'enable': 'false'}, // Disable upload process
+      );
+
+      if (response.statusCode == 200) {
+        print('Upload process stopped');
+      } else {
+        print('Failed to stop upload process');
+      }
+    } catch (error) {
+      print('Error stopping upload process: $error');
+    }
+  }
+
+
 
   void launchAuthUrlAgain() async {
     // Open the URL in the default browser or web view
@@ -206,3 +229,4 @@ class MyApp extends StatelessWidget {
 void main() {
   runApp(MyApp());
 }
+
