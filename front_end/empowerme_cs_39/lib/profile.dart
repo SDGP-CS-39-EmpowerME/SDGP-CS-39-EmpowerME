@@ -100,10 +100,10 @@ class _ProfileDetailsPageState extends State<ProfileDetailsPage> {
                 ElevatedButton(
                   onPressed: () async {
                     await signOut();
-                    if (!context.mounted) return;
+                    //if (!context.mounted) return;
                     //Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
                     if (signedOut == true){
-                      Navigator.push(
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(builder: (context) => Login()),
                       );

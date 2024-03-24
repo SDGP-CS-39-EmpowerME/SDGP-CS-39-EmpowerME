@@ -49,7 +49,7 @@ class _SavedFilesNewState extends State<SavedFilesNew> {
     //get the SharedPreferences instance
     final prefs = await SharedPreferences.getInstance();
     print("prefs instance");
-    await SearchAndRemove(prefs,searchRemoveDone);
+    await searchAndRemove(prefs,searchRemoveDone);
     //Retrieve the coordinates for each file
     for (String fileName in itemListDirectory){
       String? coordinates = prefs.getString(fileName);
@@ -63,7 +63,7 @@ class _SavedFilesNewState extends State<SavedFilesNew> {
     print(items);
   }
 
-  Future<void> SearchAndRemove(SharedPreferences prefs,bool searchRemoveDone) async {
+  Future<void> searchAndRemove(SharedPreferences prefs,bool searchRemoveDone) async {
     print("Inside search and remove method");
     Set<String> keysToRemove = {};
   // Checks each entry in SharedPreferences

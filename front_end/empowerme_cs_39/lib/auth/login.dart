@@ -1,7 +1,10 @@
+import 'package:empowerme_cs_39/auth/auth_bool.dart';
+import 'package:empowerme_cs_39/auth/reset_password.dart';
 import 'package:empowerme_cs_39/home_page.dart';
 import 'package:empowerme_cs_39/auth/register_1_personal.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:googleapis/servicecontrol/v2.dart';
 
 
 class Login extends StatelessWidget {
@@ -10,10 +13,13 @@ class Login extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool signInSuccess = false;
+  final _auth = FirebaseAuth.instance;
+  bool guestLogin = false;
+  AuthBool authBool = AuthBool();
 
   Future signIn() async {
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
+      await _auth.signInWithEmailAndPassword(
         email: _emailController.text,
         password: _passwordController.text,
       );
@@ -24,16 +30,21 @@ class Login extends StatelessWidget {
     }
   }
 
+  Future <void> checkStatus() async {
+    if (guestLogin == true){
+      authBool.loginAsGuest = true;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: Colors.blue, // Set primary color theme
       ),
       home: Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           backgroundColor: Colors.blue,
           shape: CustomShapeBorder(),
@@ -112,7 +123,11 @@ class Login extends StatelessWidget {
                     children: [
                       Expanded(
                         child: TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(builder: (context) => ResetPasswordPage()),
+                            );
+                          },
                           child: const Text(
                             'Forgot password?',
                             style: TextStyle(color: Colors.black54),
@@ -181,9 +196,12 @@ class Login extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   ElevatedButton(
-                    onPressed: () {Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (context) => HomePage()),
-                    );},
+                    onPressed: () async {
+                      guestLogin = true;
+                      await checkStatus();
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(builder: (context) => HomePage()),
+                      );},
                     style: ElevatedButton.styleFrom(
                       primary: Colors.blue,
                     ),
