@@ -37,7 +37,18 @@ class _RegisterPasswordState extends State<RegisterPassword> {
         );
         passwordCorrect = true;
       } on FirebaseAuthException catch (e) {
-        return e.message;
+        if (e.code == 'email-already-in-use') {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('The account already exists for that email.'),
+            ),
+          );
+
+        } else {
+          return e.message;
+        }
+      } catch (e) {
+        print (e);
       }
 
       //adds user details
@@ -159,7 +170,7 @@ class _RegisterPasswordState extends State<RegisterPassword> {
                   ],
                 ),
                 ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     if (_passwordController.text.isEmpty ||
                         _confirmPasswordController.text.isEmpty) {
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -189,10 +200,11 @@ class _RegisterPasswordState extends State<RegisterPassword> {
                       );
                     }
                     else {
-                      signUp(userData);
+                      await signUp(userData);
                       if (passwordCorrect){
-                        Navigator.of(context).pushReplacement(
+                        Navigator.of(context).pushAndRemoveUntil(
                           MaterialPageRoute(builder: (context) => HomePage()),
+                            (route) => false,
                         );
                       }
                     }

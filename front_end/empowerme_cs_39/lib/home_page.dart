@@ -1,11 +1,15 @@
 import 'package:empowerme_cs_39/bottom_nav_bar.dart';
 import 'package:empowerme_cs_39/cloud_storage.dart';
 import 'package:empowerme_cs_39/new_saved_files.dart';
+import 'package:empowerme_cs_39/recorder_page.dart';
 import 'package:empowerme_cs_39/saved_files.dart';
 import 'package:empowerme_cs_39/smartwatch_details_page.dart';
 import 'package:empowerme_cs_39/manual_upload.dart';
 import 'package:empowerme_cs_39/voice_recorder_page.dart';
 import 'package:flutter/material.dart';
+import 'package:empowerme_cs_39/auth/auth_bool.dart';
+import 'auth/auth_bool.dart';
+import 'emergency_contacts.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -18,7 +22,7 @@ class _HomePageState extends State<HomePage> {
 
   List <String> menuImages = ['assets/images-home/record.png','assets/images-home/watch.png','assets/images-home/savedfiles.png','assets/images-home/upload.png','assets/images-home/settings.png','assets/images-home/cloud.png'];
   List <String> mainMenu = ['Record','Watch','Saved Files', 'Upload','Settings','Cloud'];
-
+  AuthBool authBool = AuthBool();
   //keeps track of current page to display
   int selectedIndex = 0;
   void navigateBottomBar(int index){
@@ -35,7 +39,7 @@ class _HomePageState extends State<HomePage> {
         //code for record page
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => voiceRecorderPage()),
+          MaterialPageRoute(builder: (context) => VoiceRecorderPage2()),
         );
         break;
       case 1:
@@ -60,12 +64,40 @@ class _HomePageState extends State<HomePage> {
         //code for settings page
         break;
       case 5:
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => CloudStorage()),
-        );
+        print(authBool.loginAsGuest);
+        if (authBool.loginAsGuest == false){
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => CloudStorage()),
+          );
+        } else if (authBool.loginAsGuest == true) {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text('Guest Access'),
+                content: Text('You are logged in as a guest.'),
+                actions: <Widget>[
+                  TextButton(
+                    child: Text('OK'),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              );
+            },
+          );
+        }
         break;
     }
+  }
+  void EmergencyPage(){
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => ContactPage()),
+      
+    );
   }
 
   @override
@@ -90,7 +122,7 @@ class _HomePageState extends State<HomePage> {
               size: 30,
               color: Colors.white,
             ),
-            onPressed: () => emergencyCall(), // define onPressed logic here
+            onPressed: () => EmergencyPage(), // emergency page
           ),
         ],
               ),
