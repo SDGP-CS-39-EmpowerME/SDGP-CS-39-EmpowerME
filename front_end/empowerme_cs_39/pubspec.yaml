@@ -59,6 +59,7 @@ dependencies:
   webview_flutter: ^3.0.4
   dio: ^4.0.0
   path_provider: ^2.0.5
+  http: ^1.1.0
 
 dev_dependencies:
   flutter_test:
