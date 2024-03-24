@@ -41,6 +41,3 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
-
-# Node modules
-../../back_end/contact_app_backend/node_modules/
