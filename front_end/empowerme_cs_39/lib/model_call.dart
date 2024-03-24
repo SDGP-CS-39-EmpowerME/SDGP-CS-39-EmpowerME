@@ -58,7 +58,7 @@ class SendAudioService {
       var request = http.MultipartRequest(
         'POST',
         Uri.parse(
-            'https://empowerme-ml-deployment-vy6qchuv7q-uc.a.run.app/predict'),
+            'https://b3d9-2402-4000-2300-94-8df4-402c-87db-e750.ngrok-free.app/predict'),
       );
 
       // Add the .wav file to the request

@@ -68,8 +68,8 @@ class _CloudStorageState extends State<CloudStorage> {
                   activeTrackColor: Colors.lightBlueAccent, // Color of track when switch is on
                   inactiveThumbColor: Colors.grey, // Color of the thumb when switch is off
                   inactiveTrackColor: Colors.grey[300], // Color of track when switch is off
-                  //activeThumbImage: AssetImage('assets/on_icon.png'), // Image when switch is on
-                  //inactiveThumbImage: AssetImage('assets/off_icon.png'), // Image when switch is off
+                  activeThumbImage: AssetImage('assets/on_icon.png'), // Image when switch is on
+                  inactiveThumbImage: AssetImage('assets/off_icon.png'), // Image when switch is off
                 ),
               ],
             ),

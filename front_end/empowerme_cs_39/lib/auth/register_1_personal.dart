@@ -1,4 +1,3 @@
-import 'package:empowerme_cs_39/auth/register_2_family.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart'; // Import for email validation
 import 'package:provider/provider.dart';
@@ -102,10 +101,7 @@ class _RegisterPersonalDetailsState extends State<RegisterPersonalDetails> {
                           address: _addressController.text.trim(),
                           birthday: _birthdayController.text.trim(),
                         );
-                        //Navigator.pushNamed(context, '/familydetails');
-                        Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => const RegisterFamilyDetails()),
-                        );
+                        Navigator.pushNamed(context, '/familydetails');
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(

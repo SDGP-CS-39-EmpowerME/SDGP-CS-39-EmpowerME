@@ -111,7 +111,6 @@ class _BottomNavBarState extends State<BottomNavBar> {
               if (_isPlaying) {
                 try{
                   service.invoke('setAsForeground');
-
                   PermissionStatus microphoneStatus = await Permission.microphone.request();
                   //PermissionStatus locationStatus = await Permission.locationWhenInUse.request();
                   LocationPermission location = await Geolocator.requestPermission();
@@ -130,8 +129,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                       lat = '${value.latitude}';
                       long = '${value.longitude}';
                       setState(() {
-                        locationCoords = '$lat,$long';
-                        //locationCoords = '$lat°,$long°';
+                        locationCoords = '$lat°,$long°';
                       });
                       print("L   O   C   A   T   I   O   N   --->  $locationCoords");
                       _liveLocation(service);
@@ -145,7 +143,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                       ),
                     );
                     // Starts a recurring timer that stops and restarts the recording every 30 seconds
-                    _timer = Timer.periodic(const Duration(seconds: 30), (Timer t) async {
+                    _timer = Timer.periodic(const Duration(seconds: 15), (Timer t) async {
                           onRecordButtonTapped(); //Adds the filename and coordinates to the SharedPreferences instance
                           await detect.stopRecorder();
                           /*await _getCurrentLocation().then((value){
@@ -272,8 +270,9 @@ class _BottomNavBarState extends State<BottomNavBar> {
     );
     Geolocator.getPositionStream(locationSettings: locSettings)
       .listen((Position position) {
-        lat = position.latitude.toString();
-        long = position.longitude.toString();
+        /*lat = position.latitude.toString();
+        long = position.longitude.toString();*/
+      locationChange = true;
     });
   }
 

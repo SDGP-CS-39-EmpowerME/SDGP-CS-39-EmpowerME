@@ -13,8 +13,11 @@ Future<List<String>> getAudioFiles() async {
   var dir = Directory(path);
 
   var files = await dir.listSync().where((file) => file is File).toList();
-  files.sort((a, b) => a.statSync().modified.compareTo(b.statSync().modified)); //sorts using date modified (oldest to newest). Try with async if this isn't working properly.
-  List<String> fileNames = files.map((file) => file.path.split('/').last).toList();
+  files.sort((a, b) => a.statSync().modified.compareTo(b
+      .statSync()
+      .modified)); //sorts using date modified (oldest to newest). Try with async if this isn't working properly.
+  List<String> fileNames =
+      files.map((file) => file.path.split('/').last).toList();
   return fileNames;
 }
 
@@ -25,11 +28,11 @@ class SavedFilesNew extends StatefulWidget {
 
 class _SavedFilesNewState extends State<SavedFilesNew> {
   FilesCoordinates filesCoordinates = FilesCoordinates();
-  Map <String, String> fileCoords = {};
+  Map<String, String> fileCoords = {};
   late List<String> items = [];
   late List<String> itemListDirectory = [];
   int selectedIndex = 3;
-  void navigateBottomBar(int index){
+  void navigateBottomBar(int index) {
     setState(() {
       selectedIndex = index;
     });
@@ -43,18 +46,18 @@ class _SavedFilesNewState extends State<SavedFilesNew> {
     fileCoords = filesCoordinates.fileCoordinates;
   }
 
-  Future <void> loadFiles() async {
+  Future<void> loadFiles() async {
     bool searchRemoveDone = false;
     print("About to load files");
     //get the SharedPreferences instance
     final prefs = await SharedPreferences.getInstance();
     print("prefs instance");
-    await searchAndRemove(prefs,searchRemoveDone);
+    await SearchAndRemove(prefs, searchRemoveDone);
     //Retrieve the coordinates for each file
-    for (String fileName in itemListDirectory){
+    for (String fileName in itemListDirectory) {
       String? coordinates = prefs.getString(fileName);
       print("coordinates: $coordinates");
-      if (coordinates != null){
+      if (coordinates != null) {
         fileCoords[fileName] = coordinates; //loads data to map
         print("data loaded to map");
       }
@@ -63,10 +66,11 @@ class _SavedFilesNewState extends State<SavedFilesNew> {
     print(items);
   }
 
-  Future<void> searchAndRemove(SharedPreferences prefs,bool searchRemoveDone) async {
+  Future<void> SearchAndRemove(
+      SharedPreferences prefs, bool searchRemoveDone) async {
     print("Inside search and remove method");
     Set<String> keysToRemove = {};
-  // Checks each entry in SharedPreferences
+    // Checks each entry in SharedPreferences
     prefs.getKeys().forEach((key) {
       // If the key is not in itemListDirectory, its marked for removal
       if (!itemListDirectory.contains(key)) {
@@ -74,13 +78,12 @@ class _SavedFilesNewState extends State<SavedFilesNew> {
         print("SaR: key added to temp list");
       }
     });
-  // Removes the marked keys from SharedPreferences
+    // Removes the marked keys from SharedPreferences
     keysToRemove.forEach((key) {
       prefs.remove(key);
       print("key removed");
       searchRemoveDone = true;
     });
-
   }
 
   Future<void> loadFileNames() async {
@@ -94,7 +97,8 @@ class _SavedFilesNewState extends State<SavedFilesNew> {
     print(itemListDirectory.length);
     print("files obtained");
     loadFiles();
-    setState(() {}); // This is needed to trigger a rebuild of the widget after the data is loaded
+    setState(
+        () {}); // This is needed to trigger a rebuild of the widget after the data is loaded
   }
 
   @override
@@ -107,7 +111,7 @@ class _SavedFilesNewState extends State<SavedFilesNew> {
       ),
       home: Scaffold(
         appBar: PreferredSize(
-          preferredSize:const Size.fromHeight(75.0),
+          preferredSize: const Size.fromHeight(75.0),
           child: AppBar(
             title: const Text("Saved Files"),
             /*centerTitle: true,*/
@@ -124,7 +128,8 @@ class _SavedFilesNewState extends State<SavedFilesNew> {
           itemBuilder: (context, index) {
             return ListTile(
               title: Text(items[index]),
-              subtitle: Text(fileCoords[items[index]] ?? 'No coordinates available'),
+              subtitle:
+                  Text(fileCoords[items[index]] ?? 'No coordinates available'),
               trailing: IconButton(
                 icon: Icon(Icons.map),
                 /*onPressed: () async {
@@ -141,7 +146,8 @@ class _SavedFilesNewState extends State<SavedFilesNew> {
                 onPressed: () async {
                   final coordinates = fileCoords[items[index]];
                   if (coordinates != null) {
-                    final uri = Uri.https('www.google.com', '/maps/search/', {'api': '1', 'query': coordinates});
+                    final uri = Uri.https('www.google.com', '/maps/search/',
+                        {'api': '1', 'query': coordinates});
 
                     // Check if the URL can be launched
                     final canLaunch = await canLaunchUrl(uri);
