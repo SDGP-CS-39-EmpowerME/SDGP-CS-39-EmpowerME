@@ -20,7 +20,14 @@ class _CloudStorageState extends State<CloudStorage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Google Drive Auto Upload'),
+        title: Text('Auto Upload'),
+        centerTitle: false,
+        titleTextStyle: const TextStyle(
+          fontSize: 30,
+          /*fontWeight: FontWeight.w800,*/
+          color: Colors.white,
+        ),
+        backgroundColor: const Color.fromRGBO(0, 153, 255, 1.0),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -28,15 +35,24 @@ class _CloudStorageState extends State<CloudStorage> {
           Padding(
             padding: EdgeInsets.all(16.0),
             child: Text(
-              'Current Login Email: $_currentLoginEmail',
+              '$_currentLoginEmail',
               style: TextStyle(fontSize: 16.0),
             ),
           ),
           Padding(
-            padding: EdgeInsets.all(16.0),
+            padding: EdgeInsets.all(30.0),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Auto Upload: '),
+                Text(
+                  'Auto Upload',
+                  style: TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87,
+                  ),
+                ),
+                SizedBox(width: 8), // Add some space between text and switch
                 Switch(
                   value: _autoUploadEnabled,
                   onChanged: (value) {
@@ -48,14 +64,21 @@ class _CloudStorageState extends State<CloudStorage> {
                       }
                     });
                   },
+                  activeColor: Colors.blue, // Color when switch is on
+                  activeTrackColor: Colors.lightBlueAccent, // Color of track when switch is on
+                  inactiveThumbColor: Colors.grey, // Color of the thumb when switch is off
+                  inactiveTrackColor: Colors.grey[300], // Color of track when switch is off
+                  activeThumbImage: AssetImage('assets/on_icon.png'), // Image when switch is on
+                  inactiveThumbImage: AssetImage('assets/off_icon.png'), // Image when switch is off
                 ),
               ],
             ),
           ),
+
           Padding(
             padding: EdgeInsets.all(16.0),
             child: Text(
-              'Last Uploaded File: $_lastUploadedFile',
+              '$_lastUploadedFile',
               style: TextStyle(fontSize: 16.0),
             ),
           ),

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:empowerme_cs_39/home_page.dart';
 import 'package:empowerme_cs_39/saved_files.dart';
 import 'package:empowerme_cs_39/smartwatch_details_page.dart';
+import 'package:empowerme_cs_39/model_call.dart';
 import 'package:empowerme_cs_39/voice_recorder_page.dart';
 import 'package:empowerme_cs_39/connect_smartwatch.dart';
 import 'package:empowerme_cs_39/profile.dart';
@@ -28,8 +29,11 @@ Future<void> main() async {
     // Request notification permission
     await Permission.notification.request();
   }
+  SendAudioService.onStart(); // Call the onStart method from SendAudioService
+
   runApp(
-    MultiProvider( // Wrap app with MultiProvider
+    MultiProvider(
+      // Wrap app with MultiProvider
       providers: [
         ChangeNotifierProvider(create: (_) => UserData()), // Provide UserData
       ],
@@ -42,13 +46,17 @@ Future<void> main() async {
         ),
         home: const MainAuthPage(),
         routes: <String, WidgetBuilder>{
-          '/smartwatch_details_page': (BuildContext context) => const SmartwatchDetails(),
+          '/smartwatch_details_page': (BuildContext context) =>
+              const SmartwatchDetails(),
           '/homepage': (BuildContext context) => const HomePage(),
           '/savedfilespage': (BuildContext context) => const SavedFilesPage(),
-          '/voicerecorderpage': (BuildContext context) => const voiceRecorderPage(),
-          '/connectsmartwatchpage': (BuildContext context) => const Connect_smartwatch(),
+          '/voicerecorderpage': (BuildContext context) =>
+              const voiceRecorderPage(),
+          '/connectsmartwatchpage': (BuildContext context) =>
+              const Connect_smartwatch(),
           '/profilepage': (BuildContext context) => const ProfilePage(),
-          '/familydetails': (BuildContext context) => const RegisterFamilyDetails(),
+          '/familydetails': (BuildContext context) =>
+              const RegisterFamilyDetails(),
           '/passwordpage': (BuildContext context) => const RegisterPassword(),
           '/login': (BuildContext context) => Login(),
         },
