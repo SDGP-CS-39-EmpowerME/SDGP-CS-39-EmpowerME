@@ -2,6 +2,7 @@ import 'package:empowerme_cs_39/auth/login.dart';
 import 'package:empowerme_cs_39/auth/main_auth_page.dart';
 import 'package:empowerme_cs_39/auth/register_1_personal.dart';
 import 'package:empowerme_cs_39/auth/register_3_password.dart';
+import 'package:empowerme_cs_39/recording_state.dart';
 import 'package:flutter/material.dart';
 import 'package:empowerme_cs_39/home_page.dart';
 import 'package:empowerme_cs_39/saved_files.dart';
@@ -13,6 +14,7 @@ import 'package:empowerme_cs_39/profile.dart';
 import 'package:empowerme_cs_39/auth/register_2_family.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
+import 'auth/auth_bool.dart';
 import 'auth/firebase_options.dart';
 import 'package:provider/provider.dart'; // Import Provider
 import 'package:empowerme_cs_39/auth/register_userdata.dart'; // Import UserData class
@@ -36,6 +38,8 @@ Future<void> main() async {
       // Wrap app with MultiProvider
       providers: [
         ChangeNotifierProvider(create: (_) => UserData()), // Provide UserData
+        ChangeNotifierProvider(create: (context) => AuthBool()),
+        ChangeNotifierProvider(create: (context) => RecordingState()),
       ],
       child: MaterialApp(
         title: 'EmpowerMe App',

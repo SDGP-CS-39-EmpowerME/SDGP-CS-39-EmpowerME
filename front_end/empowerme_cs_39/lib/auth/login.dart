@@ -5,6 +5,7 @@ import 'package:empowerme_cs_39/auth/register_1_personal.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:googleapis/servicecontrol/v2.dart';
+import 'package:provider/provider.dart';
 
 
 class Login extends StatelessWidget {
@@ -15,7 +16,7 @@ class Login extends StatelessWidget {
   bool signInSuccess = false;
   final _auth = FirebaseAuth.instance;
   bool guestLogin = false;
-  AuthBool authBool = AuthBool();
+  //AuthBool authBool = AuthBool();
 
   Future signIn() async {
     try {
@@ -27,12 +28,6 @@ class Login extends StatelessWidget {
 
     } on FirebaseAuthException catch (e) {
       return e.message;
-    }
-  }
-
-  void checkStatus() async {
-    if (guestLogin == true){
-      authBool.loginAsGuest = true;
     }
   }
 
@@ -140,9 +135,9 @@ class Login extends StatelessWidget {
                   ElevatedButton(
                     onPressed: () {
                       signIn().then((_) {
-                        // Login successful! Navigate to HomePage
+                        // Login successful. Navigates to HomePage
                         if (signInSuccess == true){
-                          authBool.loginAsGuest = false;
+                          //authBool.loginAsGuest = false;
                           Navigator.of(context).pushReplacement(
                             MaterialPageRoute(builder: (context) => HomePage()),
                           );
@@ -200,7 +195,8 @@ class Login extends StatelessWidget {
                     onPressed: () async {
                       //guestLogin = true;
                       /*await checkStatus();*/
-                      authBool.loginAsGuest = true;
+                      //authBool.loginAsGuest = true;
+                      Provider.of<AuthBool>(context, listen: false).loginAsGuest = true;
                       Navigator.of(context).pushReplacement(
                         MaterialPageRoute(builder: (context) => HomePage()),
                       );},
@@ -225,7 +221,6 @@ class Login extends StatelessWidget {
                       ),
                       TextButton(
                         onPressed: () {
-                          authBool.loginAsGuest = false;
                           Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => RegisterPersonalDetails()),

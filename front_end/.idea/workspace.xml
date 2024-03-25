@@ -5,26 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b472bf0a-462c-44b8-bf38-6981ad5d0fad" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/empowerme_cs_39/lib/recording_state.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/empowerme_cs_39/android/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/empowerme_cs_39/android/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/empowerme_cs_39/lib/auth/auth_bool.dart" beforeDir="false" afterPath="$PROJECT_DIR$/empowerme_cs_39/lib/auth/auth_bool.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/empowerme_cs_39/lib/auth/login.dart" beforeDir="false" afterPath="$PROJECT_DIR$/empowerme_cs_39/lib/auth/login.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/empowerme_cs_39/lib/auth/register_1_personal.dart" beforeDir="false" afterPath="$PROJECT_DIR$/empowerme_cs_39/lib/auth/register_1_personal.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/empowerme_cs_39/lib/auth/register_2_family.dart" beforeDir="false" afterPath="$PROJECT_DIR$/empowerme_cs_39/lib/auth/register_2_family.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/empowerme_cs_39/lib/auth/register_3_password.dart" beforeDir="false" afterPath="$PROJECT_DIR$/empowerme_cs_39/lib/auth/register_3_password.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/empowerme_cs_39/lib/bottom_nav_bar.dart" beforeDir="false" afterPath="$PROJECT_DIR$/empowerme_cs_39/lib/bottom_nav_bar.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/empowerme_cs_39/lib/cloud_storage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/empowerme_cs_39/lib/cloud_storage.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/empowerme_cs_39/lib/home_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/empowerme_cs_39/lib/home_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/empowerme_cs_39/lib/model_call.dart" beforeDir="false" afterPath="$PROJECT_DIR$/empowerme_cs_39/lib/model_call.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/empowerme_cs_39/lib/new_saved_files.dart" beforeDir="false" afterPath="$PROJECT_DIR$/empowerme_cs_39/lib/new_saved_files.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/empowerme_cs_39/lib/profile.dart" beforeDir="false" afterPath="$PROJECT_DIR$/empowerme_cs_39/lib/profile.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/empowerme_cs_39/linux/flutter/generated_plugin_registrant.cc" beforeDir="false" afterPath="$PROJECT_DIR$/empowerme_cs_39/linux/flutter/generated_plugin_registrant.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/empowerme_cs_39/linux/flutter/generated_plugins.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/empowerme_cs_39/linux/flutter/generated_plugins.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/empowerme_cs_39/macos/Flutter/GeneratedPluginRegistrant.swift" beforeDir="false" afterPath="$PROJECT_DIR$/empowerme_cs_39/macos/Flutter/GeneratedPluginRegistrant.swift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/empowerme_cs_39/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/empowerme_cs_39/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/empowerme_cs_39/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/empowerme_cs_39/pubspec.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/empowerme_cs_39/windows/flutter/generated_plugin_registrant.cc" beforeDir="false" afterPath="$PROJECT_DIR$/empowerme_cs_39/windows/flutter/generated_plugin_registrant.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/empowerme_cs_39/windows/flutter/generated_plugins.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/empowerme_cs_39/windows/flutter/generated_plugins.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/empowerme_cs_39/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/empowerme_cs_39/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/empowerme_cs_39/lib/stream_detection.dart" beforeDir="false" afterPath="$PROJECT_DIR$/empowerme_cs_39/lib/stream_detection.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
