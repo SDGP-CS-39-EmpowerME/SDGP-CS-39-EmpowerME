@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
 class CloudStorage extends StatefulWidget {
@@ -11,10 +12,11 @@ class CloudStorage extends StatefulWidget {
 }
 
 class _CloudStorageState extends State<CloudStorage> {
-  bool _autoUploadEnabled = false;
+  //bool _autoUploadEnabled = false;
   String _currentLoginEmail = '';
   String _lastUploadedFile = '';
   String _authUrl = '';
+  late bool _autoUploadEnabled;
 
   @override
   Widget build(BuildContext context) {
@@ -58,18 +60,24 @@ class _CloudStorageState extends State<CloudStorage> {
                   onChanged: (value) {
                     setState(() {
                       _autoUploadEnabled = value;
+                      // Save the switch state to SharedPreferences
+                      _saveAutoUploadEnabled(value);
                       if (_autoUploadEnabled) {
                         // Trigger the authentication process
                         initiateAuthentication();
+                      } else {
+                        // Stop the uploading process
+                        stopUploadingProcess();
                       }
                     });
                   },
+
                   activeColor: Colors.blue, // Color when switch is on
                   activeTrackColor: Colors.lightBlueAccent, // Color of track when switch is on
                   inactiveThumbColor: Colors.grey, // Color of the thumb when switch is off
                   inactiveTrackColor: Colors.grey[300], // Color of track when switch is off
-                  activeThumbImage: AssetImage('assets/on_icon.png'), // Image when switch is on
-                  inactiveThumbImage: AssetImage('assets/off_icon.png'), // Image when switch is off
+                  //activeThumbImage: AssetImage('assets/on_icon.png'), // Image when switch is on
+                  //inactiveThumbImage: AssetImage('assets/off_icon.png'), // Image when switch is off
                 ),
               ],
             ),
@@ -117,6 +125,25 @@ class _CloudStorageState extends State<CloudStorage> {
       print('Could not launch $authUrl');
     }
   }
+
+  void stopUploadingProcess() async {
+    try {
+      var response = await http.post(
+        Uri.parse('https://3582-45-121-90-169.ngrok-free.app/toggleUpload'),
+        body: {'enable': 'false'}, // Disable upload process
+      );
+
+      if (response.statusCode == 200) {
+        print('Upload process stopped');
+      } else {
+        print('Failed to stop upload process');
+      }
+    } catch (error) {
+      print('Error stopping upload process: $error');
+    }
+  }
+
+
 
   void launchAuthUrlAgain() async {
     // Open the URL in the default browser or web view
@@ -171,11 +198,33 @@ class _CloudStorageState extends State<CloudStorage> {
     return null;
   }
 
+  @override
+  void initState() {
+    super.initState();
+    // Initialize the switch state from SharedPreferences
+    _loadAutoUploadEnabled();
+    // initiateAuthentication();
+  }
+
+  Future<void> _loadAutoUploadEnabled() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      // Load the switch state from SharedPreferences
+      _autoUploadEnabled = prefs.getBool('autoUploadEnabled') ?? false;
+    });
+  }
+
+  Future<void> _saveAutoUploadEnabled(bool value) async {
+    final prefs = await SharedPreferences.getInstance();
+    // Save the switch state to SharedPreferences
+    await prefs.setBool('autoUploadEnabled', value);
+  }
+
   void _sendFolderPathToBackend(String folderPath) async {
     try {
       var response = await http.post(
         Uri.parse(
-            'https://3582-45-121-90-169.ngrok-free.app'), // Replace with your backend URL
+            'https://3582-45-121-90-169.ngrok-free.app/upload'), // Replace with your backend URL
         body: {'com.android.externalstorage.documents/tree/primary%3ADownload%2FAudios/document/primary%3ADownload%2FAudios': folderPath},
       );
 
@@ -206,3 +255,4 @@ class MyApp extends StatelessWidget {
 void main() {
   runApp(MyApp());
 }
+

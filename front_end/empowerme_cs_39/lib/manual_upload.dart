@@ -78,6 +78,7 @@ class _MyHomePageState extends State<MyHomePage> {
       // Check the response
       if (response.statusCode == 200) {
         print('File uploaded successfully');
+        print(fileName);
       } else {
         print('Error uploading file');
       }
@@ -90,7 +91,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('File Upload'),
+        title: Text('Manual Upload'),
         centerTitle: false,
         titleTextStyle: const TextStyle(
           fontSize: 30,

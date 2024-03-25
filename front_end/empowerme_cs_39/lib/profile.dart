@@ -103,9 +103,10 @@ class _ProfileDetailsPageState extends State<ProfileDetailsPage> {
                     if (!context.mounted) return;
                     //Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
                     if (signedOut == true){
-                      Navigator.push(
+                      Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(builder: (context) => Login()),
+                          (Route<dynamic> route) => false,
                       );
                     }
                   },
