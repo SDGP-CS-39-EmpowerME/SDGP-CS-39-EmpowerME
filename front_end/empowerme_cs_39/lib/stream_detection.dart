@@ -51,6 +51,7 @@ class StreamDetection{
     await initializeDateFormatting();
     //BottomNavBar nav = BottomNavBar as BottomNavBar;
     await recorder.openRecorder();
+    //await recorder.setBufferSize(bufferSize);
     recorderReady = true;
     if (recorderReady == true) {
       print("startRecorder: Recorder ready");
@@ -62,28 +63,54 @@ class StreamDetection{
       toFile: recordingPath,
       codec: Codec.pcm16WAV,
     );
-    recorder.onProgress!.listen((event) {
-      audioStreamController.add(event as Uint8List);
-    });
-    timer = Timer.periodic(const Duration(seconds: 15), (timer) {
+    await recorder.onProgress!.listen(
+      (event) {
+        print("ssssssssssssssssss inside onProgress listen part");
+        audioStreamController.add(event as Uint8List);
+      },
+      onError:(error){
+        print("Error in onProgress stream: $error");
+      }
+    );
+    /*timer = Timer.periodic(const Duration(seconds: 15), (timer) {
       storeChunk();
-    });
+    });*/
+    startTimer();
+  }
+
+  void startTimer(){
+    timer = Timer(const Duration(milliseconds: 100),waitForChunkCreation);
+  }
+
+  void waitForChunkCreation() async {
+    await storeChunk();
+    timer = Timer(const Duration(seconds: 15),waitForChunkCreation);
   }
   
   Future<void> storeChunk () async {
     List<Uint8List> chunks = [];
     print("000000000000000000000000000 inside storeChunk() method");
-    subscription = audioStreamController.stream.listen((chunk) {
-      chunks.add(chunk);
-      print("big chunkus added");
-    });
+    subscription = await audioStreamController.stream.listen(
+          (chunk) {
+            print("Chunk data: $chunk");  // This will print the chunk data
+            chunks.add(chunk);
+            print("big chunkus added");
+          },
+          onError: (error) {
+            print("Error in stream: $error");
+          },
+    );
     recordingPathChunk = await filePath('App Recordings'); //stores the file path
     print("OOOOOOOOOOOOOOOOOOOOOOOOOOOO   storeChunk(): $recordingPathChunk");
     try {
-      for (int i = 0; i < chunks.length; i++){
-        File file = File(recordingPath!);
-        await file.writeAsBytes(chunks[i]);
-        onRecordButtonTapped();
+      if (chunks.isNotEmpty) { // Check if chunks list has elements
+        for (int i = 0; i < chunks.length; i++){
+          File file = File(recordingPathChunk!);
+          await file.writeAsBytes(chunks[i]);
+          onRecordButtonTapped(recordingPathChunk!);
+        }
+      } else {
+        print("No audio data received yet");
       }
     } on Exception catch (e) {
       print("EEEEEEEEEEEEEEEEEEEEE storeChunk() Error message $e");
@@ -100,11 +127,11 @@ class StreamDetection{
 
   /// every time the button is pressed and the file names and the coords are obtained, the key-value pair should be formed.
   /// The instance should be the same thing for all pairs and the instance should be created only once. Change below code to make that happen. meka me nikan liyala thiyenne.
-  void onRecordButtonTapped() async {
+  void onRecordButtonTapped(String filePathChunk) async {
     //Starts a SharedPreferences instance
     final prefs = await SharedPreferences.getInstance();
     //Stores the coordinates with the file name as the key
-    await prefs.setString(filename,locationCoords);
+    await prefs.setString(filePathChunk,locationCoords);
   }
 
   //listen to location settings

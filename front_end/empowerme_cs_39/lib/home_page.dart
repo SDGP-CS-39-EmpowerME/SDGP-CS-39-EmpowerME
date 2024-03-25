@@ -2,6 +2,7 @@ import 'package:empowerme_cs_39/bottom_nav_bar.dart';
 import 'package:empowerme_cs_39/cloud_storage.dart';
 import 'package:empowerme_cs_39/new_saved_files.dart';
 import 'package:empowerme_cs_39/recorder_page.dart';
+import 'package:empowerme_cs_39/recording_state.dart';
 import 'package:empowerme_cs_39/saved_files.dart';
 import 'package:empowerme_cs_39/smartwatch_details_page.dart';
 import 'package:empowerme_cs_39/manual_upload.dart';
@@ -10,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:empowerme_cs_39/auth/auth_bool.dart';
 import 'auth/auth_bool.dart';
 import 'emergency_contacts.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -22,7 +24,7 @@ class _HomePageState extends State<HomePage> {
 
   List <String> menuImages = ['assets/images-home/record.png','assets/images-home/watch.png','assets/images-home/savedfiles.png','assets/images-home/upload.png','assets/images-home/settings.png','assets/images-home/cloud.png'];
   List <String> mainMenu = ['Record','Watch','Saved Files', 'Upload','Settings','Cloud'];
-  AuthBool authBool = AuthBool();
+  //AuthBool authBool = AuthBool();
   //keeps track of current page to display
   int selectedIndex = 0;
   void navigateBottomBar(int index){
@@ -34,6 +36,7 @@ class _HomePageState extends State<HomePage> {
   emergencyCall(){} //method for the emergency call button in the app bar
 
   void menuPressed(int index) {
+    bool loginAsGuest = Provider.of<AuthBool>(context,listen: false).loginAsGuest;
     switch (index){
       case 0:
         //code for record page
@@ -64,13 +67,12 @@ class _HomePageState extends State<HomePage> {
         //code for settings page
         break;
       case 5:
-        print(authBool.loginAsGuest);
-        if (authBool.loginAsGuest == false){
+        if (loginAsGuest == false){
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => CloudStorage()),
           );
-        } else if (authBool.loginAsGuest == true) {
+        } else if (loginAsGuest == true) {
           showDialog(
             context: context,
             builder: (BuildContext context) {
@@ -102,6 +104,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<RecordingState>(context, listen: false).updateIndex(0);
     return Scaffold(
       backgroundColor:Colors.white/*grey[200]*/,
       appBar: PreferredSize(

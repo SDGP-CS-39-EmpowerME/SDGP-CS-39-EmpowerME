@@ -1,5 +1,6 @@
 import 'package:empowerme_cs_39/files_and_coords.dart';
 import 'package:empowerme_cs_39/navbar_detection.dart';
+import 'package:empowerme_cs_39/recording_state.dart';
 import 'package:flutter/material.dart';
 import 'package:empowerme_cs_39/profile.dart';
 import 'package:flutter/services.dart';
@@ -9,6 +10,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:provider/provider.dart';
 
 
 class BottomNavBar extends StatefulWidget {
@@ -22,7 +24,7 @@ class BottomNavBar extends StatefulWidget {
 
 class _BottomNavBarState extends State<BottomNavBar> {
   int selectedIndex = 0; // Define selectedIndex for tracking the selected item
-  bool _isPlaying = false;
+  bool _isRecording = false;
   DetectionService detect = DetectionService();
   String fileName = ''; //from DetectionService
   FilesCoordinates filesCoordinates = FilesCoordinates();
@@ -101,14 +103,15 @@ class _BottomNavBarState extends State<BottomNavBar> {
 
           else if (index == 1) {
             // Check for internet connectivity
+            Provider.of<RecordingState>(context, listen: false).toggleRecording();
             final isConnected = await Connectivity().checkConnectivity();
             final service = FlutterBackgroundService();
             if (isConnected == ConnectivityResult.mobile || isConnected == ConnectivityResult.wifi) {
               setState(() {
-                _isPlaying = !_isPlaying; // Toggle play/pause state
+                _isRecording = !_isRecording; // Toggle play/pause state
                 widget.onTap(index); // Call provided function
               });
-              if (_isPlaying) {
+              if (_isRecording) {
                 try{
                   service.invoke('setAsForeground');
 
@@ -175,12 +178,12 @@ class _BottomNavBarState extends State<BottomNavBar> {
                         content: Text('Permission is necessary for detection.'),
                       ));
                       setState(() {
-                        _isPlaying = false;
+                        _isRecording = false;
                       });
                     }
                     else if (microphoneStatus == PermissionStatus.permanentlyDenied || location == LocationPermission.deniedForever || storageStatus == PermissionStatus.permanentlyDenied){
                       setState(() {
-                        _isPlaying = false;
+                        _isRecording = false;
                       });
                       openAppSettings();
                     }
@@ -193,7 +196,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                     ),
                   );
                 }
-              } else if (!_isPlaying){
+              } else if (!_isRecording){
                 await stopThing(service);
                 service.invoke('stopService');
               }
@@ -221,6 +224,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
               print(e);
             }
           }
+          Provider.of<RecordingState>(context, listen: false).updateIndex(index);
         },
         items: [
           BottomNavigationBarItem(
@@ -234,7 +238,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                 borderRadius: BorderRadius.circular(15),
               ),
               padding: const EdgeInsets.only(top: 5, bottom: 5, left: 30, right: 30),
-                child: _isPlaying ? const Icon(Icons.pause_rounded, size: 40) : const Icon(Icons.play_arrow_rounded, size: 40),
+                child: Provider.of<RecordingState>(context).isRecording ? const Icon(Icons.stop_rounded,size: 40,) : const Icon(Icons.mic,size: 40,),
             ),
             label: 'Detect',
           ),
