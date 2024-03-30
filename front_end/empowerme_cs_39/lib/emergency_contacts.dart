@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/services.dart';
 
-
 class ContactPage extends StatefulWidget {
   const ContactPage({super.key});
 
@@ -25,11 +24,14 @@ class _ContactPageState extends State<ContactPage> {
 
   Future<void> fetchContactsFromBackend() async {
     try {
-      final response = await http.get(Uri.parse('http://10.0.2.2:3000/getContacts'));
+      /*final response = await http.get(Uri.parse('http://10.0.2.2:3000/getContacts'));*/
+      final response = await http.get(
+          Uri.parse('https://sdgp-cs-39-empower-me.vercel.app/getContacts'));
 
       if (response.statusCode == 200) {
         List<dynamic> jsonContacts = json.decode(response.body);
-        List<Contact> fetchedContacts = jsonContacts.map((json) => Contact.fromJson(json)).toList();
+        List<Contact> fetchedContacts =
+            jsonContacts.map((json) => Contact.fromJson(json)).toList();
 
         setState(() {
           contacts = fetchedContacts;
@@ -82,7 +84,8 @@ class _ContactPageState extends State<ContactPage> {
                               builder: (BuildContext context) {
                                 return AlertDialog(
                                   title: const Text('Delete Contact'),
-                                  content: const Text('Are you sure you want to delete this contact?'),
+                                  content: const Text(
+                                      'Are you sure you want to delete this contact?'),
                                   actions: [
                                     TextButton(
                                       onPressed: () {
@@ -129,10 +132,10 @@ class _ContactPageState extends State<ContactPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-
           title: const Text('Add Contact'),
           contentPadding: const EdgeInsets.symmetric(horizontal: 24.0),
-          content: SingleChildScrollView( // Wrap with SingleChildScrollView
+          content: SingleChildScrollView(
+            // Wrap with SingleChildScrollView
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -141,10 +144,10 @@ class _ContactPageState extends State<ContactPage> {
                 TextFormField(
                   keyboardType: TextInputType.name,
                   inputFormatters: [
-                    FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]')), // Only letters allowed
+                    FilteringTextInputFormatter.allow(
+                        RegExp(r'[a-zA-Z]')), // Only letters allowed
                   ],
                   maxLength: 15,
-
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   controller: nameController,
                   textInputAction: TextInputAction.next,
@@ -154,21 +157,23 @@ class _ContactPageState extends State<ContactPage> {
                     }
                     return null;
                   },
-                  decoration: const InputDecoration(labelText: 'Name',counterText: '',),
+                  decoration: const InputDecoration(
+                    labelText: 'Name',
+                    counterText: '',
+                  ),
                   style: const TextStyle(fontSize: 18.0),
                 ),
                 const SizedBox(height: 10.0),
                 TextFormField(
                   keyboardType: TextInputType.phone,
-
                   inputFormatters: [
-                    FilteringTextInputFormatter.allow(RegExp(r'[0-9]')), // Only numbers allowed
+                    FilteringTextInputFormatter.allow(
+                        RegExp(r'[0-9]')), // Only numbers allowed
                   ],
-                  maxLength:10,
+                  maxLength: 10,
                   textInputAction: TextInputAction.done,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   controller: numberController,
-
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'Please enter a number';
@@ -177,8 +182,10 @@ class _ContactPageState extends State<ContactPage> {
                     }
                     return null;
                   },
-
-                  decoration: const InputDecoration(labelText: 'Number',counterText: '',),
+                  decoration: const InputDecoration(
+                    labelText: 'Number',
+                    counterText: '',
+                  ),
                   style: const TextStyle(fontSize: 18.0),
                 ),
               ],
@@ -193,7 +200,8 @@ class _ContactPageState extends State<ContactPage> {
             ),
             TextButton(
               onPressed: () {
-                if (nameController.text.isEmpty || numberController.text.isEmpty) {
+                if (nameController.text.isEmpty ||
+                    numberController.text.isEmpty) {
                   showDialog(
                     context: context,
                     builder: (BuildContext context) {
@@ -230,7 +238,8 @@ class _ContactPageState extends State<ContactPage> {
 
     if (name.isNotEmpty && number.isNotEmpty) {
       // Check if a contact with the same name or number already exists
-      bool isDuplicate = contacts.any((contact) => contact.name == name || contact.number == number);
+      bool isDuplicate = contacts
+          .any((contact) => contact.name == name || contact.number == number);
 
       if (isDuplicate) {
         // Show a message indicating that the contact already exists
@@ -261,7 +270,9 @@ class _ContactPageState extends State<ContactPage> {
     });
     try {
       final response = await http.delete(
-        Uri.parse('http://10.0.2.2:3000/deleteContact/${contactToDelete.name}'),
+        /*Uri.parse('http://10.0.2.2:3000/deleteContact/${contactToDelete.name}'),*/
+        Uri.parse(
+            'https://sdgp-cs-39-empower-me.vercel.app/deleteContact/${contactToDelete.name}'),
       );
       if (response.statusCode == 200) {
         print('Contact deleted successfully');
@@ -281,7 +292,8 @@ class _ContactPageState extends State<ContactPage> {
 
   void sendDataToBackend(Contact contact) async {
     final response = await http.post(
-      Uri.parse('http://10.0.2.2:3000/addContact'),
+      /*Uri.parse('http://10.0.2.2:3000/addContact'),*/
+      Uri.parse('https://sdgp-cs-39-empower-me.vercel.app/addContact'),
       body: {
         'name': contact.name,
         'number': contact.number,
@@ -289,6 +301,7 @@ class _ContactPageState extends State<ContactPage> {
     );
     print('Response from backend: ${response.body}');
   }
+
   //Edit contacts
   void _showEditContactDialog(BuildContext context, int index) {
     nameController.text = contacts[index].name;
@@ -296,11 +309,12 @@ class _ContactPageState extends State<ContactPage> {
 
     showDialog(
       context: context,
-      builder:(BuildContext context) {
+      builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Edit Contact'),
           contentPadding: const EdgeInsets.symmetric(horizontal: 24.0),
-          content: SingleChildScrollView( // Wrap with SingleChildScrollView
+          content: SingleChildScrollView(
+            // Wrap with SingleChildScrollView
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -308,11 +322,11 @@ class _ContactPageState extends State<ContactPage> {
                 const SizedBox(height: 10.0),
                 TextFormField(
                   keyboardType: TextInputType.name,
-
                   inputFormatters: [
-                    FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]')), // Only letters allowed
+                    FilteringTextInputFormatter.allow(
+                        RegExp(r'[a-zA-Z]')), // Only letters allowed
                   ],
-                  maxLength:15,
+                  maxLength: 15,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   controller: nameController,
                   textInputAction: TextInputAction.next,
@@ -322,22 +336,23 @@ class _ContactPageState extends State<ContactPage> {
                     }
                     return null;
                   },
-                  decoration: const InputDecoration(labelText: 'Name',counterText: '',),
+                  decoration: const InputDecoration(
+                    labelText: 'Name',
+                    counterText: '',
+                  ),
                   style: const TextStyle(fontSize: 18.0),
                 ),
                 const SizedBox(height: 10.0),
                 TextFormField(
                   keyboardType: TextInputType.phone,
-
                   inputFormatters: [
-                    FilteringTextInputFormatter.allow(RegExp(r'[0-9]')), // Only numbers allowed
+                    FilteringTextInputFormatter.allow(
+                        RegExp(r'[0-9]')), // Only numbers allowed
                   ],
-                  maxLength:10,
-
+                  maxLength: 10,
                   textInputAction: TextInputAction.done,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   controller: numberController,
-
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'Please enter a number';
@@ -346,8 +361,10 @@ class _ContactPageState extends State<ContactPage> {
                     }
                     return null;
                   },
-
-                  decoration: const InputDecoration(labelText: 'Number',counterText: '',),
+                  decoration: const InputDecoration(
+                    labelText: 'Number',
+                    counterText: '',
+                  ),
                   style: const TextStyle(fontSize: 18.0),
                 ),
               ],
@@ -362,7 +379,8 @@ class _ContactPageState extends State<ContactPage> {
             ),
             TextButton(
               onPressed: () {
-                if (nameController.text.isEmpty || numberController.text.isEmpty) {
+                if (nameController.text.isEmpty ||
+                    numberController.text.isEmpty) {
                   showDialog(
                     context: context,
                     builder: (BuildContext context) {
@@ -407,22 +425,27 @@ class _ContactPageState extends State<ContactPage> {
 
       try {
         final response = await http.put(
-          Uri.parse('http://10.0.2.2:3000/updateContact/${oldContact.name}'),
+          /*Uri.parse('http://10.0.2.2:3000/updateContact/${oldContact.name}'),*/
+          Uri.parse(
+              'https://sdgp-cs-39-empower-me.vercel.app/updateContact/${oldContact.name}'),
           headers: {"Content-Type": "application/json"},
           body: json.encode({"newName": newName, "newNumber": newNumber}),
         );
         if (response.statusCode == 200) {
           print('Contact updated successfully');
         } else {
-          print('Failed to update contact. Status code: ${response.statusCode}');
+          print(
+              'Failed to update contact. Status code: ${response.statusCode}');
           setState(() {
-            contacts[index] = oldContact; // Revert back to the old contact on failure
+            contacts[index] =
+                oldContact; // Revert back to the old contact on failure
           });
         }
       } catch (error) {
         print('Error updating contact: $error');
         setState(() {
-          contacts[index] = oldContact; // Revert back to the old contact on error
+          contacts[index] =
+              oldContact; // Revert back to the old contact on error
         });
       }
     }
