@@ -203,12 +203,12 @@ height: 300px;
 }
 
 
-#watericon {
+#icon {
 list-style: none;
 margin-left: 20%;
 }
 
-#watericon li a {
+#icon li a {
 text-decoration: none;
 color:white ;
 padding-top: 1%;
@@ -216,12 +216,12 @@ font-size: 50px;
 }
 
 
-#watericon li a:hover {
+#icon li a:hover {
 opacity: 0.7;
 }
 
 
-#wateroicon li{
+#icon li{
 display: inline;
 }
 
